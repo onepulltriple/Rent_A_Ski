@@ -4,8 +4,9 @@ obj/
 # ignore binary files
 bin/
 
-# ignore packages
-packages
-
-#ignore visual studio stuff
+# ignore visual studio stuff
 .vs/
+
+# ignore Word document used as outline
+Ski Rental Program Outline.docx
+~$i Rental Program Outline.docx
