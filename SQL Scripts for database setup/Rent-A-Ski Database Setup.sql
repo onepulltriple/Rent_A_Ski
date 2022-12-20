@@ -68,7 +68,7 @@ CREATE TABLE TABLE_EMPLOYEES (
 	Email varchar(100) NOT NULL UNIQUE,
 	Birthday date NOT NULL,
 	Username varchar(100) NOT NULL UNIQUE,
-	Password varchar(255) NOT NULL UNIQUE
+	Password varchar(255) NOT NULL
 	)
 
 SELECT * FROM TABLE_EMPLOYEES ORDER BY 'id'
