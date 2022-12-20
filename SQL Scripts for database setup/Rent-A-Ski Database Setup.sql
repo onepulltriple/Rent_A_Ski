@@ -35,7 +35,8 @@ CREATE TABLE TABLE_CATEGORY (
 INSERT INTO TABLE_CATEGORY (Name) VALUES
 	('Ski'), 
 	('Snowboard'), 
-	('Boots'), 
+	('Ski Boots'), 
+	('Snowboard Boots'),
 	('Poles'), 
 	('Helmet'), 
 	('Goggles')
@@ -46,10 +47,11 @@ SELECT * FROM TABLE_CATEGORY ORDER BY 'id'
 --DROP TABLE TABLE_ARTICLES
 CREATE TABLE TABLE_ARTICLES (
 	id int PRIMARY KEY IDENTITY(1,1),
-	Name varchar(50) NOT NULL,
-	PricePerDay decimal NOT NULL,
+	Name varchar(100) NOT NULL,
+	PricePerDay decimal(10,2) NOT NULL,
 	Counter int DEFAULT 0,
-	TABLE_STATUS_ID int NOT NULL,
+	MaintenanceInterval int DEFAULT 10,
+	TABLE_STATUS_ID int NOT NULL DEFAULT 1,
 	TABLE_CATEGORY_ID int NOT NULL,
 	FOREIGN KEY (TABLE_STATUS_ID) REFERENCES TABLE_STATUS(id),
 	FOREIGN KEY (TABLE_CATEGORY_ID) REFERENCES TABLE_CATEGORY(id)
@@ -78,6 +80,7 @@ CREATE TABLE TABLE_CUSTOMERS (
 	FirstName varchar(50) NOT NULL,
 	LastName varchar(50) NOT NULL,
 	Email varchar(100) NOT NULL UNIQUE,
+	Birthday date NOT NULL,
 	Address varchar(100) NOT NULL,
 	City varchar(50) NOT NULL,
 	ZIP varchar(15) NOT NULL,

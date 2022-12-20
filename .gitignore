@@ -10,3 +10,4 @@ bin/
 # ignore Word document used as outline
 Ski Rental Program Outline.docx
 ~$i Rental Program Outline.docx
+*.tmp
