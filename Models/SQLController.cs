@@ -21,6 +21,7 @@ namespace Rent_A_Ski.Models
         SqlCommand command;
         SqlDataReader reader;
 
+
         public SQLController()
         {
             connection = new(connectionString);

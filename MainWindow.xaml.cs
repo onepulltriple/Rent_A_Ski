@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Rent_A_Ski.Models;
 
 namespace Rent_A_Ski
 {
@@ -23,6 +24,16 @@ namespace Rent_A_Ski
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void ShowAllItems(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void ExitProgram(object sender, RoutedEventArgs e)
+        {
+            Environment.Exit(0);
         }
     }
 }

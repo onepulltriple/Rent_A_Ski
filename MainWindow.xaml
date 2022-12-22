@@ -5,8 +5,33 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Rent_A_Ski"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Rent-a-Ski" Height="450" Width="800">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="8*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+
+        <Frame
+            Name="MainWindowFrame"
+            Grid.Row="0"
+            NavigationUIVisibility="Hidden"
+            />
+
+
+        <UniformGrid Grid.Row="2" Rows="2">
+            <Button Click="ShowAllItems" Content="Show Complete Inventory"/>
+            <Button/>
+            <Button/>
+            <Button/>
+            <Button/>
+            <Button/>
+            <Button/>
+            <Button Click="ExitProgram" Content="Exit"/>
+
+        </UniformGrid>
+        
+        
 
     </Grid>
 </Window>
