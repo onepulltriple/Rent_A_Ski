@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Rent_A_Ski.Models
 {
@@ -27,5 +28,44 @@ namespace Rent_A_Ski.Models
             connection = new(connectionString);
         }
 
+        public bool AreCredentialsOK(string username, string password)
+        {
+            string foundPassword = "";
+            query = "SELECT * FROM TABLE_EMPLOYEES WHERE Username = @UsernamePlaceholder";
+
+            command = new(query, connection);
+            command.Parameters.AddWithValue("@UsernamePlaceholder", username);
+
+            try
+            {
+                connection.Open();
+                reader = command.ExecuteReader();
+
+                if (reader.HasRows == false)
+                {
+                    return false;
+                }
+
+                // If we reach this point, a username was found.
+                while (reader.Read())
+                {
+                    foundPassword = (string)reader["Password"];
+                }
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show(error.Message);
+                return false;
+                //throw;
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            // Return the below resolved value directly.
+            return BCrypt.Net.BCrypt.Verify(password, foundPassword);
+
+        }
     }
 }
