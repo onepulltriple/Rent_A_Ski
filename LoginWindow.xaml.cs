@@ -30,12 +30,56 @@ namespace Rent_A_Ski
             //string testpw = BCrypt.Net.BCrypt.HashPassword("skiski");
         }
 
+
+      
+        private void LoginWindowLoaded(object sender, RoutedEventArgs e)
+        {
+            Keyboard.Focus(UsernameTextBox);
+        }
+
+        private void UsernameTextBoxKeyDownHandler(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Tab)
+                Keyboard.Focus(PasswordBox01);
+            if (e.Key == Key.Enter)
+                StartLogin(sender, e);
+        }
+
+        private void PasswordBox01KeyDownHandler(object sender, KeyEventArgs e)
+        {
+            if (e.Key==Key.Tab)
+                Keyboard.Focus(LoginButton);
+            if (e.Key == Key.Enter)
+                StartLogin(sender, e);
+        }
+
+        #region Make "Credentials invalid." message disappear.
+        private void UsernameTextBoxGetsFocus(object sender, RoutedEventArgs e)
+        {
+            LoginFailedMessage.Visibility = Visibility.Hidden;
+        }
+
+        private void PasswordBoxGetsFocus(object sender, RoutedEventArgs e)
+        {
+            LoginFailedMessage.Visibility = Visibility.Hidden;
+        }
+
+        private void LoginButtonGetsFocus(object sender, RoutedEventArgs e)
+        {
+            LoginFailedMessage.Visibility = Visibility.Hidden;
+        }
+        #endregion
+       
         private void StartLogin(object sender, RoutedEventArgs e)
         {
             if (String.IsNullOrEmpty(Credentials.Username) ||
-                String.IsNullOrEmpty(Credentials.Password))
+                String.IsNullOrEmpty(PasswordBox01.Password))
+            {
+                LoginFailedMessage.Visibility = Visibility.Visible;
                 return;
+            }
 
+            Credentials.Password = PasswordBox01.Password;
             bool result = new SQLController().AreCredentialsOK(Credentials.Username, Credentials.Password);
 
             if (result)
@@ -49,19 +93,7 @@ namespace Rent_A_Ski
                 LoginFailedMessage.Visibility = Visibility.Visible;
             }
         }
-        
 
-        #region Make "Credentials invalid." message disappear.
-        private void UsernameTextBoxGetsFocus(object sender, RoutedEventArgs e)
-        {
-            LoginFailedMessage.Visibility = Visibility.Hidden;
-        }
-
-        private void PasswordTextBoxGetsFocus(object sender, RoutedEventArgs e)
-        {
-            LoginFailedMessage.Visibility = Visibility.Hidden;
-        }
-        #endregion
 
     }
 }
