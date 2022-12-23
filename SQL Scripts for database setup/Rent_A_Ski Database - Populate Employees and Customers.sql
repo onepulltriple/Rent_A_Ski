@@ -4,7 +4,7 @@ USE RENT_A_SKI
 INSERT INTO TABLE_EMPLOYEES 
 	(FirstName, LastName, Email, Birthday, Username, Password)
 	VALUES
-	('Chase','Helgenlechner','chase.helgenlechner@rentaski.com','1970-01-31','admin01','skiski')
+	('Chase','Helgenlechner','chase.helgenlechner@rentaski.com','1970-01-31','admin01','$2a$11$aMf7yNk5xoEqOvKutnnlY.GXSTqlDwuQ02u1POb6LfgIApAml368.')
 
 --DELETE FROM TABLE_EMPLOYEES
 SELECT * FROM TABLE_EMPLOYEES

@@ -27,7 +27,7 @@ namespace Rent_A_Ski
             InitializeComponent();
             DataContext = this;
 
-            string testpw = BCrypt.Net.BCrypt.HashPassword("skiski");
+            //string testpw = BCrypt.Net.BCrypt.HashPassword("skiski");
         }
 
         private void StartLogin(object sender, RoutedEventArgs e)
