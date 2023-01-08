@@ -12,7 +12,7 @@ namespace Rent_A_Ski.Models
     {
         #region Connection info for Windows Authentication
         string connectionString =
-            "Server=CREATOR-DESKTOP\\SQLEXPRESS; " +
+            $"Server={Environment.GetEnvironmentVariable("COMPUTERNAME")}\\SQLEXPRESS; " +  
             "Database=RENT_A_SKI; " +
             "Trusted_Connection=True;"; //Integrated Security = true; // also works
         #endregion
