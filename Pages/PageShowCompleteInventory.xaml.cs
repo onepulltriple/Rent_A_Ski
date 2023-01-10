@@ -12,31 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Rent_A_Ski.Models;
-using Rent_A_Ski.Pages;
 
-namespace Rent_A_Ski
+namespace Rent_A_Ski.Pages
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for PageShowCompleteInventory.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class PageShowCompleteInventory : Page
     {
-        public MainWindow()
+        public PageShowCompleteInventory()
         {
             InitializeComponent();
         }
-
-        private void ShowCompleteInventory(object sender, RoutedEventArgs e)
-        {
-            MainWindowFrame.Content = new PageShowCompleteInventory();
-        }
-
-        private void ExitProgram(object sender, RoutedEventArgs e)
-        {
-            Environment.Exit(0);
-        }
-
-
     }
 }

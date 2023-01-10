@@ -1,37 +1,78 @@
-﻿<Window x:Class="Rent_A_Ski.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Rent_A_Ski"
-        mc:Ignorable="d"
-        Title="Rent_A_Ski" Height="450" Width="800">
+﻿<Window
+    x:Class="Rent_A_Ski.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Rent_A_Ski"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Rent_A_Ski"
+    Width="1000"
+    Height="1000"
+    MinWidth="640"
+    MinHeight="600"
+    mc:Ignorable="d">
+
+    <Window.Resources>
+        <Style BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="{x:Type TextBlock}">
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+            <Setter Property="TextAlignment" Value="Center" />
+            <Setter Property="Padding" Value="12,0,12,0" />
+        </Style>
+    </Window.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="8*"/>
-            <RowDefinition Height="2*"/>
+            <RowDefinition Height="80*" MinHeight="400px"/>
+            <RowDefinition
+                Height="10*"
+                MinHeight="75px"
+                MaxHeight="90px" />
+            <RowDefinition
+                Height="10*"
+                MinHeight="75px"
+                MaxHeight="90px" />
         </Grid.RowDefinitions>
 
         <Frame
             Name="MainWindowFrame"
             Grid.Row="0"
-            NavigationUIVisibility="Hidden"
-            />
+            
+            NavigationUIVisibility="Hidden" />
 
 
-        <UniformGrid Grid.Row="2" Rows="2">
-            <Button Click="ShowAllItems" Content="Show Complete Inventory"/>
-            <Button/>
-            <Button/>
-            <Button/>
-            <Button/>
-            <Button/>
-            <Button/>
-            <Button Click="ExitProgram" Content="Exit"/>
-
+        <UniformGrid Grid.Row="1" Rows="1">
+            <Button Click="ShowCompleteInventory">
+                <TextBlock>Show Complete Inventory</TextBlock>
+            </Button>
+            <Button>
+                <TextBlock>Add/Edit/Remove Inventory</TextBlock>
+            </Button>
+            <Button>
+                <TextBlock>Make a Rental</TextBlock>
+            </Button>
+            <Button>
+                <TextBlock>Make a Return</TextBlock>
+            </Button>
         </UniformGrid>
-        
-        
+
+        <UniformGrid Grid.Row="2" Rows="1">
+            <Button>
+                <TextBlock>List All Customers</TextBlock>
+            </Button>
+            <Button>
+                <TextBlock>Add/Edit/Remove Customers</TextBlock>
+            </Button>
+            <Button>
+                <TextBlock>Add/Edit/Remove Employees</TextBlock>
+            </Button>
+            <Button Click="ExitProgram">
+                <TextBlock>Exit</TextBlock>
+            </Button>
+        </UniformGrid>
+
+
+
 
     </Grid>
 </Window>
