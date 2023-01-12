@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Rent_A_Ski.Models;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,9 +23,27 @@ namespace Rent_A_Ski.Pages
     /// </summary>
     public partial class PageShowCompleteInventory : Page
     {
+        public ObservableCollection<Article> ListOfCompleteInventory 
+        { 
+            get => Article.ListOfArticles; 
+        }
+
+        public Article SelectedArticle { get; set; }
+
         public PageShowCompleteInventory()
         {
+            DataContext = this;
+            InitializeData();
             InitializeComponent();
+        }
+
+        private void InitializeData()
+        {
+            var x = new SQLController().GetArticles();
+            foreach (var item in x)
+            {
+                ListOfCompleteInventory.Add(item);
+            }
         }
     }
 }
