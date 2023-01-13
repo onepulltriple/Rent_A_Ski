@@ -192,5 +192,93 @@ namespace Rent_A_Ski.Models
 
             return tempListOfCategories;
         }
+
+        public ObservableCollection<Customer> GetCustomers()
+        {
+            ObservableCollection<Customer> tempListOfCustomers = new();
+
+            query = "SELECT * FROM TABLE_CUSTOMERS";
+
+            command = new(query, connection);
+
+            try
+            {
+                connection.Open();
+                reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        Customer tempCustomer = new();
+                        tempCustomer.id = (int)reader["id"];
+                        tempCustomer.FirstName = (string)reader["FirstName"];
+                        tempCustomer.LastName = (string)reader["LastName"];
+                        tempCustomer.Email = (string)reader["Email"];
+                        tempCustomer.Birthday = (DateTime)reader["Birthday"];
+                        tempCustomer.Address = (string)reader["Address"];
+                        tempCustomer.City = (string)reader["City"];
+                        tempCustomer.ZIP = (string)reader["ZIP"];
+
+                        tempCustomer.Employee = new Employee();
+                        tempCustomer.Employee.id = (int)reader["TABLE_EMPLOYEES_ID"];
+
+                        tempListOfCustomers.Add(tempCustomer);
+                    }
+                }
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show(error.Message);
+                //throw;
+            }
+
+            connection.Close();
+
+            return tempListOfCustomers;
+        }
+
+        public ObservableCollection<Employee> GetEmployees()
+        {
+            ObservableCollection<Employee> tempListOfEmployees = new();
+
+            query = "SELECT * FROM TABLE_EMPLOYEES";
+
+            command = new(query, connection);
+
+            try
+            {
+                connection.Open();
+                reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        Employee tempEmployee = new();
+                        tempEmployee.id = (int)reader["id"];
+                        tempEmployee.FirstName = (string)reader["FirstName"];
+                        tempEmployee.LastName = (string)reader["LastName"];
+                        tempEmployee.Email = (string)reader["Email"];
+                        tempEmployee.Birthday = (DateTime)reader["Birthday"];
+                        tempEmployee.Address = (string)reader["Address"];
+                        tempEmployee.City = (string)reader["City"];
+                        tempEmployee.Username = (string)reader["Username"];
+                        tempEmployee.Password = (string)reader["Password"];
+
+                        tempListOfEmployees.Add(tempEmployee);
+                    }
+                }
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show(error.Message);
+                //throw;
+            }
+
+            connection.Close();
+
+            return tempListOfEmployees;
+        }
     }
 }

@@ -71,6 +71,9 @@ CREATE TABLE TABLE_EMPLOYEES (
 	LastName varchar(50) NOT NULL,
 	Email varchar(100) NOT NULL UNIQUE,
 	Birthday date NOT NULL,
+	Address varchar(100) NOT NULL,
+	City varchar(50) NOT NULL,
+	ZIP varchar(15) NOT NULL,
 	Username varchar(100) NOT NULL UNIQUE,
 	Password varchar(255) NOT NULL
 	)

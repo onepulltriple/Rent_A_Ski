@@ -42,6 +42,5 @@ namespace Rent_A_Ski.Models
             get { return new SQLController().GetArticles(); }
         }
 
-
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,22 +17,32 @@ namespace Rent_A_Ski.Models
 
         public string Email { get; set; }
 
-        private DateOnly birthday;
+        private DateTime birthday;
 
-        public DateOnly Birthday
+        public DateTime Birthday
         {
             set { birthday = value; }
         }
 
         public string DateOfBirth
         {
-            get { return birthday.ToString("dd.MM.yyyy"); }
+            get { return birthday.ToString("yyyy-MM-dd"); }
         }
+
+        public string Address { get; set; }
+
+        public string City { get; set; }
+
+        public string ZIP { get; set; }
 
         public string Username { get; set; }
 
         public string Password { get; set; }
 
+        public static ObservableCollection<Employee> ListOfEmployees
+        {
+            get { return new SQLController().GetEmployees(); }
+        }
 
     }
 }

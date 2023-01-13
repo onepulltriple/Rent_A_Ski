@@ -32,11 +32,14 @@ namespace Rent_A_Ski
             MainWindowFrame.Content = new PageShowCompleteInventory();
         }
 
+        private void ShowAllCustomers(object sender, RoutedEventArgs e)
+        {
+            MainWindowFrame.Content = new PageShowAllCustomers();
+        }
+
         private void ExitProgram(object sender, RoutedEventArgs e)
         {
             Environment.Exit(0);
         }
-
-
     }
 }
