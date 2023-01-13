@@ -33,6 +33,10 @@ namespace Rent_A_Ski.Models
 
         public int MaintenanceInterval { get; set; }
 
+        public int Status_id { get; set; }
+
+        public int Category_id { get; set; }
+
         public Status Status { get; set; }
 
         public Category Category { get; set; }

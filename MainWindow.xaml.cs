@@ -37,6 +37,16 @@ namespace Rent_A_Ski
             MainWindowFrame.Content = new PageShowAllCustomers();
         }
 
+        private void AddEditRemoveEmployees(object sender, RoutedEventArgs e)
+        {
+            MainWindowFrame.Content = new PageAddEditRemoveEmployees();
+        }
+
+        private void ShowCompleteRentalHistory(object sender, RoutedEventArgs e)
+        {
+            MainWindowFrame.Content = new PageShowCompleteRentalHistory();
+        }
+
         private void ExitProgram(object sender, RoutedEventArgs e)
         {
             Environment.Exit(0);

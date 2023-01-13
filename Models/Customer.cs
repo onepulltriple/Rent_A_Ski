@@ -35,6 +35,8 @@ namespace Rent_A_Ski.Models
 
         public string ZIP { get; set; }
 
+        public int Employee_id { get; set; }
+
         public Employee Employee { get; set; }
 
         public static ObservableCollection<Customer> ListOfCustomers

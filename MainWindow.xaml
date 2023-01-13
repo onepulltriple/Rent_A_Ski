@@ -10,6 +10,7 @@
     Height="1000"
     MinWidth="640"
     MinHeight="600"
+    Top="50"
     mc:Ignorable="d">
 
     <Window.Resources>
@@ -23,7 +24,7 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="80*" MinHeight="400px"/>
+            <RowDefinition Height="80*" MinHeight="400px" />
             <RowDefinition
                 Height="10*"
                 MinHeight="75px"
@@ -37,7 +38,6 @@
         <Frame
             Name="MainWindowFrame"
             Grid.Row="0"
-            
             NavigationUIVisibility="Hidden" />
 
 
@@ -45,25 +45,31 @@
             <Button Click="ShowCompleteInventory">
                 <TextBlock>Show Complete Inventory</TextBlock>
             </Button>
-            <Button>
-                <TextBlock>Add/Edit/Remove Inventory</TextBlock>
+            <Button Click="ShowAllCustomers">
+                <TextBlock>Show All Customers</TextBlock>
             </Button>
             <Button>
                 <TextBlock>Make a Rental</TextBlock>
             </Button>
+            <Button Click="ShowCompleteRentalHistory" FontStyle="Italic">
+                <TextBlock>Show Complete Rental History</TextBlock>
+            </Button>
             <Button>
-                <TextBlock>Make a Return</TextBlock>
+                <TextBlock>Show Outstanding Rentals</TextBlock>
             </Button>
         </UniformGrid>
 
         <UniformGrid Grid.Row="2" Rows="1">
-            <Button Click="ShowAllCustomers">
-                <TextBlock>Show All Customers</TextBlock>
+            <Button>
+                <TextBlock>Add/Edit/Remove Inventory</TextBlock>
             </Button>
             <Button>
                 <TextBlock>Add/Edit/Remove Customers</TextBlock>
             </Button>
             <Button>
+                <TextBlock>Make a Return</TextBlock>
+            </Button>
+            <Button Click="AddEditRemoveEmployees" FontStyle="Italic">
                 <TextBlock>Add/Edit/Remove Employees</TextBlock>
             </Button>
             <Button Click="ExitProgram">

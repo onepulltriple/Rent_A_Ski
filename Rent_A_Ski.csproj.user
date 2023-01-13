@@ -10,10 +10,16 @@
     <Compile Update="LoginWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Pages\PageAddEditRemoveEmployees.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Pages\PageShowAllCustomers.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Pages\PageShowCompleteInventory.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\PageShowCompleteRentalHistory.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -24,10 +30,16 @@
     <Page Update="MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Pages\PageAddEditRemoveEmployees.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Pages\PageShowAllCustomers.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Pages\PageShowCompleteInventory.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\PageShowCompleteRentalHistory.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

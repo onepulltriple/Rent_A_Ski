@@ -73,11 +73,11 @@ namespace Rent_A_Ski.Models
         {
             ObservableCollection<Article> tempListOfArticles = new();
 
-            //query = "SELECT * FROM TABLE_ARTICLES";
-            query = 
-                "SELECT TABLE_ARTICLES.*, TABLE_STATUS.Description AS status_id, TABLE_CATEGORY.Name AS category_id FROM TABLE_ARTICLES " +
-                "INNER JOIN TABLE_STATUS ON TABLE_ARTICLES.TABLE_STATUS_ID = TABLE_STATUS.id " +
-                "INNER JOIN TABLE_CATEGORY ON TABLE_ARTICLES.TABLE_CATEGORY_ID = TABLE_CATEGORY.id";
+            query = "SELECT * FROM TABLE_ARTICLES";
+            //query = 
+            //    "SELECT TABLE_ARTICLES.*, TABLE_STATUS.Description AS status_id, TABLE_CATEGORY.Name AS category_id FROM TABLE_ARTICLES " +
+            //    "INNER JOIN TABLE_STATUS ON TABLE_ARTICLES.TABLE_STATUS_ID = TABLE_STATUS.id " +
+            //    "INNER JOIN TABLE_CATEGORY ON TABLE_ARTICLES.TABLE_CATEGORY_ID = TABLE_CATEGORY.id";
 
             command = new(query, connection);
 
@@ -98,13 +98,21 @@ namespace Rent_A_Ski.Models
                         tempArticle.PricePerDay = (decimal)reader["PricePerDay"];
                         tempArticle.Counter = (int)reader["Counter"];
                         tempArticle.MaintenanceInterval = (int)reader["MaintenanceInterval"];
+                        tempArticle.Status_id = (int)reader["TABLE_STATUS_ID"];
+                        tempArticle.Category_id = (int)reader["TABLE_CATEGORY_ID"];
 
-                        tempArticle.Status = new Status();
-                        tempArticle.Category = new Category();
-                        tempArticle.Status.id = (int)reader["TABLE_STATUS_ID"];
-                        tempArticle.Status.Description = (string)reader["status_id"];
-                        tempArticle.Category.id = (int)reader["TABLE_CATEGORY_ID"];
-                        tempArticle.Category.Name = (string)reader["category_id"];
+                        tempArticle.Status =
+                            Status.ListOfStatuses.First(x => x.id == tempArticle.Status_id);
+
+                        tempArticle.Category =
+                            Category.ListOfCategories.First(x => x.id == tempArticle.Category_id);
+
+                        //tempArticle.Status = new Status();
+                        //tempArticle.Category = new Category();
+                        //tempArticle.Status.id = (int)reader["TABLE_STATUS_ID"];
+                        //tempArticle.Status.Description = (string)reader["status_id"];
+                        //tempArticle.Category.id = (int)reader["TABLE_CATEGORY_ID"];
+                        //tempArticle.Category.Name = (string)reader["category_id"];
 
                         tempListOfArticles.Add(tempArticle);
                     }
@@ -121,11 +129,11 @@ namespace Rent_A_Ski.Models
             return tempListOfArticles;
         }
 
-        public ObservableCollection<Status> GetStatuses()
+        public ObservableCollection<Rental> GetRentals()
         {
-            ObservableCollection<Status> tempListOfStatuses = new();
+            ObservableCollection<Rental> tempListOfRentals = new();
 
-            query = "SELECT * FROM TABLE_STATUS";
+            query = "SELECT * FROM TABLE_RENTALS";
 
             command = new(query, connection);
 
@@ -138,11 +146,24 @@ namespace Rent_A_Ski.Models
                 {
                     while (reader.Read())
                     {
-                        Status tempStatus = new();
-                        tempStatus.id = (int)reader["id"];
-                        tempStatus.Description = (string)reader["Description"];
+                        Rental tempRental = new();
+                        tempRental.id = (int)reader["id"];
+                        tempRental.OutgoingDate = (DateTime)reader["OutgoingDate"];
+                        tempRental.ReturnDate = (DateTime)reader["ReturnDate"];
+                        tempRental.Article_id = (int)reader["TABLE_ARTICLES_ID"];
+                        tempRental.Customer_id = (int)reader["TABLE_CUSTOMERS_ID"];
+                        tempRental.Employee_id = (int)reader["TABLE_EMPLOYEES_ID"];
 
-                        tempListOfStatuses.Add(tempStatus);
+                        tempRental.Article =
+                            Article.ListOfArticles.First(x => x.id == tempRental.Article_id);
+
+                        tempRental.Customer =
+                            Customer.ListOfCustomers.First(x => x.id == tempRental.Customer_id);
+
+                        tempRental.Employee =
+                            Employee.ListOfEmployees.First(x => x.id == tempRental.Employee_id);
+
+                        tempListOfRentals.Add(tempRental);
                     }
                 }
             }
@@ -154,43 +175,7 @@ namespace Rent_A_Ski.Models
 
             connection.Close();
 
-            return tempListOfStatuses;
-        }
-
-        public ObservableCollection<Category> GetCategories()
-        {
-            ObservableCollection<Category> tempListOfCategories = new();
-
-            query = "SELECT * FROM TABLE_CATEGORY";
-
-            command = new(query, connection);
-
-            try
-            {
-                connection.Open();
-                reader = command.ExecuteReader();
-
-                if (reader.HasRows)
-                {
-                    while (reader.Read())
-                    {
-                        Category tempCategory = new();
-                        tempCategory.id = (int)reader["id"];
-                        tempCategory.Name = (string)reader["Name"];
-
-                        tempListOfCategories.Add(tempCategory);
-                    }
-                }
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show(error.Message);
-                //throw;
-            }
-
-            connection.Close();
-
-            return tempListOfCategories;
+            return tempListOfRentals;
         }
 
         public ObservableCollection<Customer> GetCustomers()
@@ -219,9 +204,10 @@ namespace Rent_A_Ski.Models
                         tempCustomer.Address = (string)reader["Address"];
                         tempCustomer.City = (string)reader["City"];
                         tempCustomer.ZIP = (string)reader["ZIP"];
+                        tempCustomer.Employee_id = (int)reader["TABLE_EMPLOYEES_ID"];
 
-                        tempCustomer.Employee = new Employee();
-                        tempCustomer.Employee.id = (int)reader["TABLE_EMPLOYEES_ID"];
+                        tempCustomer.Employee =
+                            Employee.ListOfEmployees.First(x => x.id == tempCustomer.Employee_id);
 
                         tempListOfCustomers.Add(tempCustomer);
                     }
@@ -263,6 +249,7 @@ namespace Rent_A_Ski.Models
                         tempEmployee.Birthday = (DateTime)reader["Birthday"];
                         tempEmployee.Address = (string)reader["Address"];
                         tempEmployee.City = (string)reader["City"];
+                        tempEmployee.ZIP = (string)reader["ZIP"];
                         tempEmployee.Username = (string)reader["Username"];
                         tempEmployee.Password = (string)reader["Password"];
 
@@ -279,6 +266,78 @@ namespace Rent_A_Ski.Models
             connection.Close();
 
             return tempListOfEmployees;
+        }
+        
+        public ObservableCollection<Category> GetCategories()
+        {
+            ObservableCollection<Category> tempListOfCategories = new();
+
+            query = "SELECT * FROM TABLE_CATEGORY";
+
+            command = new(query, connection);
+
+            try
+            {
+                connection.Open();
+                reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        Category tempCategory = new();
+                        tempCategory.id = (int)reader["id"];
+                        tempCategory.Name = (string)reader["Name"];
+
+                        tempListOfCategories.Add(tempCategory);
+                    }
+                }
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show(error.Message);
+                //throw;
+            }
+
+            connection.Close();
+
+            return tempListOfCategories;
+        }
+        
+        public ObservableCollection<Status> GetStatuses()
+        {
+            ObservableCollection<Status> tempListOfStatuses = new();
+
+            query = "SELECT * FROM TABLE_STATUS";
+
+            command = new(query, connection);
+
+            try
+            {
+                connection.Open();
+                reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        Status tempStatus = new();
+                        tempStatus.id = (int)reader["id"];
+                        tempStatus.Description = (string)reader["Description"];
+
+                        tempListOfStatuses.Add(tempStatus);
+                    }
+                }
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show(error.Message);
+                //throw;
+            }
+
+            connection.Close();
+
+            return tempListOfStatuses;
         }
     }
 }
