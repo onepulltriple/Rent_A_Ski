@@ -74,10 +74,6 @@ namespace Rent_A_Ski.Models
             ObservableCollection<Article> tempListOfArticles = new();
 
             query = "SELECT * FROM TABLE_ARTICLES";
-            //query = 
-            //    "SELECT TABLE_ARTICLES.*, TABLE_STATUS.Description AS status_id, TABLE_CATEGORY.Name AS category_id FROM TABLE_ARTICLES " +
-            //    "INNER JOIN TABLE_STATUS ON TABLE_ARTICLES.TABLE_STATUS_ID = TABLE_STATUS.id " +
-            //    "INNER JOIN TABLE_CATEGORY ON TABLE_ARTICLES.TABLE_CATEGORY_ID = TABLE_CATEGORY.id";
 
             command = new(query, connection);
 
@@ -106,13 +102,6 @@ namespace Rent_A_Ski.Models
 
                         tempArticle.Category =
                             Category.ListOfCategories.First(x => x.id == tempArticle.Category_id);
-
-                        //tempArticle.Status = new Status();
-                        //tempArticle.Category = new Category();
-                        //tempArticle.Status.id = (int)reader["TABLE_STATUS_ID"];
-                        //tempArticle.Status.Description = (string)reader["status_id"];
-                        //tempArticle.Category.id = (int)reader["TABLE_CATEGORY_ID"];
-                        //tempArticle.Category.Name = (string)reader["category_id"];
 
                         tempListOfArticles.Add(tempArticle);
                     }

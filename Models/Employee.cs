@@ -39,10 +39,11 @@ namespace Rent_A_Ski.Models
 
         public string Password { get; set; }
 
-        public static ObservableCollection<Employee> ListOfEmployees
-        {
-            get { return new SQLController().GetEmployees(); }
-        }
+        public static ObservableCollection<Employee> ListOfEmployees { get; set; }
 
+        public static void RefreshListOfEmployees()
+        {
+            ListOfEmployees = new SQLController().GetEmployees();
+        }
     }
 }

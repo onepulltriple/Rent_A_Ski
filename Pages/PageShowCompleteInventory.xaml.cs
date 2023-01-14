@@ -39,11 +39,7 @@ namespace Rent_A_Ski.Pages
 
         private void InitializeData()
         {
-            var x = new SQLController().GetArticles();
-            foreach (var item in x)
-            {
-                ListOfCompleteInventory.Add(item);
-            }
+            Article.RefreshListOfArticles();
         }
     }
 }

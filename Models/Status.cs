@@ -13,10 +13,11 @@ namespace Rent_A_Ski.Models
 
         public string Description { get; set; }
 
-        public static ObservableCollection<Status> ListOfStatuses
-        {
-            get { return new SQLController().GetStatuses(); }
-        }
+        public static ObservableCollection<Status> ListOfStatuses { get; set; }
 
+        public static void RefreshListOfStatuses()
+        {
+            ListOfStatuses = new SQLController().GetStatuses();
+        }
     }
 }

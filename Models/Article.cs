@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -41,10 +42,13 @@ namespace Rent_A_Ski.Models
 
         public Category Category { get; set; }
 
-        public static ObservableCollection<Article> ListOfArticles
-        {
-            get { return new SQLController().GetArticles(); }
-        }
+        public static ObservableCollection<Article> ListOfArticles { get; set; }
 
+        public static void RefreshListOfArticles()
+        {
+            Category.RefreshListOfCategories();
+            Status.RefreshListOfStatuses();
+            ListOfArticles = new SQLController().GetArticles(); 
+        }
     }
 }

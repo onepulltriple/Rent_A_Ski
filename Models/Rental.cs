@@ -49,9 +49,14 @@ namespace Rent_A_Ski.Models
 
         public Employee Employee { get; set; }
 
-        public static ObservableCollection<Rental> ListOfRentals
+        public static ObservableCollection<Rental> ListOfRentals { get; set; }
+
+        public static void RefreshListOfRentals()
         {
-            get { return new SQLController().GetRentals(); }
+            Article.RefreshListOfArticles();
+            Customer.RefreshListOfCustomers();
+            Employee.RefreshListOfEmployees();
+            ListOfRentals = new SQLController().GetRentals();
         }
 
     }

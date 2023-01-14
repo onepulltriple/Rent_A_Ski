@@ -38,11 +38,7 @@ namespace Rent_A_Ski.Pages
 
         public void InitializeData()
         {
-            var r = new SQLController().GetRentals();
-            foreach (var item in r)
-            {
-                FullListOfRentals.Add(item);
-            }
+            Rental.RefreshListOfRentals();
         }
     }
 }
