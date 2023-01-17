@@ -24,8 +24,10 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="4.5*" />
             <RowDefinition Height="7px" />
+            <RowDefinition Height="0.5*" />
             <RowDefinition Height="4.5*" />
-            <RowDefinition Height="1.0*" />
+            <RowDefinition Height="0.5*" />
+
             <RowDefinition Height="4px" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -42,7 +44,7 @@
             AutoGenerateColumns="False"
             IsReadOnly="True"
             ItemsSource="{Binding ListOfAvailableArticles}"
-            SelectedItem="{Binding SelectedArticle}"
+            SelectedItem="{Binding SelectedAvailableArticle}"
             SelectionMode="Extended">
 
             <DataGrid.Columns>
@@ -64,6 +66,7 @@
                 IsReadOnly="True"
                 ItemsSource="{Binding FullListOfCustomers}"
                 SelectedItem="{Binding SelectedCustomer}"
+                SelectionChanged="CustomerChanged"
                 SelectionMode="Single">
 
                 <DataGrid.Columns>
@@ -76,7 +79,8 @@
 
             <TextBlock
                 Grid.Row="1"
-                Text="{Binding SelectedCustomer.FirstName" Background="LightBlue"/>
+                Background="Red"
+                Text="{Binding SelectedCustomer.FirstName}" />
         </Grid>
 
         <GridSplitter
@@ -95,26 +99,53 @@
             HorizontalAlignment="Stretch"
             Background="Gray" />
 
+        <UniformGrid
+            Grid.Row="2"
+            Grid.Column="0"
+            Rows="1">
+            <Button Name="AddArticlesToStageButton" Click="AddArticlesToStage">
+                <TextBlock>Add Article(s) to Stage</TextBlock>
+            </Button>
+            <Button Name="RemoveArticlesFromStageButton" Click="RemoveArticlesFromStage">
+                <TextBlock>Remove Article(s) from Stage</TextBlock>
+            </Button>
+        </UniformGrid>
+
+        <DataGrid
+            Grid.Row="3"
+            AutoGenerateColumns="False"
+            IsReadOnly="True"
+            ItemsSource="{Binding StagedArticlesList}"
+            SelectedItem="{Binding SelectedStagedArticle}"
+            SelectionMode="Single">
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Category.Name}" Header="Category" />
+                <DataGridTextColumn Binding="{Binding Name}" Header="Article Description" />
+                <DataGridTextColumn Binding="{Binding PricePerDay}" Header="Price Per Day" />
+            </DataGrid.Columns>
+        </DataGrid>
+
         <Button
             Name="CreateRentalButton"
-            Grid.Row="3"
+            Grid.Row="4"
             Width="200"
             Click="CreateRental">
             <TextBlock>Rent Item to Customer</TextBlock>
         </Button>
 
         <GridSplitter
-            Grid.Row="4"
+            Grid.Row="5"
             Grid.Column="0"
             HorizontalAlignment="Stretch"
             Background="Gray" />
         <GridSplitter
-            Grid.Row="4"
+            Grid.Row="5"
             Grid.Column="1"
             HorizontalAlignment="Stretch"
             Background="Gray" />
         <GridSplitter
-            Grid.Row="4"
+            Grid.Row="5"
             Grid.Column="2"
             HorizontalAlignment="Stretch"
             Background="Gray" />

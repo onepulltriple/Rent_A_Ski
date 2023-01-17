@@ -22,21 +22,18 @@ namespace Rent_A_Ski.Pages
     /// </summary>
     public partial class PageMakeARental : Page
     {
-        public ObservableCollection<Article> ListOfAvailableArticles 
-        {
-            get
-            {
-                var tempList = Article.ListOfArticles.
-                    Where(x => x.Status.Description == "Available").ToList();
-                return new ObservableCollection<Article>(tempList);
-            }
-        }
+        public ObservableCollection<Article> ListOfAvailableArticles { get; set; }
+
         public ObservableCollection<Customer> FullListOfCustomers
         {
             get => Customer.ListOfCustomers;
         }
 
-        public Article SelectedArticle { get; set; }
+        public ObservableCollection<Article> StagedArticlesList { get; set; } = new();
+
+        public Article SelectedAvailableArticle { get; set; }
+
+        public Article SelectedStagedArticle { get; set; }
         public Customer SelectedCustomer { get; set; }
 
         public PageMakeARental()
@@ -50,9 +47,37 @@ namespace Rent_A_Ski.Pages
         {
             Article.RefreshListOfArticles();
             Customer.RefreshListOfCustomers();
+
+            var tempList = Article.ListOfArticles.
+                Where(x => x.Status.Description == "Available").ToList();
+            ListOfAvailableArticles = new ObservableCollection<Article>(tempList);
         }
 
         private void CreateRental(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+
+        private void AddArticlesToStage(object sender, RoutedEventArgs e)
+        {
+            if (SelectedAvailableArticle != null)
+            {
+                StagedArticlesList.Add(SelectedAvailableArticle);
+                ListOfAvailableArticles.Remove(SelectedAvailableArticle);
+            }
+        }
+
+        private void RemoveArticlesFromStage(object sender, RoutedEventArgs e)
+        {
+            if (SelectedStagedArticle != null)
+            {
+                ListOfAvailableArticles.Add(SelectedStagedArticle);
+                StagedArticlesList.Remove(SelectedStagedArticle);
+            }
+        }
+
+        private void CustomerChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }
