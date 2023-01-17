@@ -48,7 +48,7 @@
             <Button Click="ShowAllCustomers">
                 <TextBlock>Show All Customers</TextBlock>
             </Button>
-            <Button>
+            <Button Click="MakeARental">
                 <TextBlock>Make a Rental</TextBlock>
             </Button>
             <Button Click="ShowCompleteRentalHistory" FontStyle="Italic">

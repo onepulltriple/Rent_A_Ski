@@ -18,18 +18,28 @@ using System.Windows.Shapes;
 namespace Rent_A_Ski.Pages
 {
     /// <summary>
-    /// Interaction logic for PageShowAllCustomers.xaml
+    /// Interaction logic for PageMakeARental.xaml
     /// </summary>
-    public partial class PageShowAllCustomers : Page
+    public partial class PageMakeARental : Page
     {
-        public ObservableCollection<Customer> CompleteListOfCustomers
+        public ObservableCollection<Article> ListOfAvailableArticles 
+        {
+            get
+            {
+                var tempList = Article.ListOfArticles.
+                    Where(x => x.Status.Description == "Available").ToList();
+                return new ObservableCollection<Article>(tempList);
+            }
+        }
+        public ObservableCollection<Customer> FullListOfCustomers
         {
             get => Customer.ListOfCustomers;
         }
 
+        public Article SelectedArticle { get; set; }
         public Customer SelectedCustomer { get; set; }
 
-        public PageShowAllCustomers()
+        public PageMakeARental()
         {
             DataContext = this;
             InitializeData();
@@ -38,7 +48,13 @@ namespace Rent_A_Ski.Pages
 
         private void InitializeData()
         {
+            Article.RefreshListOfArticles();
             Customer.RefreshListOfCustomers();
+        }
+
+        private void CreateRental(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

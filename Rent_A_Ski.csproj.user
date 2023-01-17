@@ -13,6 +13,9 @@
     <Compile Update="Pages\PageAddEditRemoveEmployees.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Pages\PageMakeARental.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Pages\PageShowAllCustomers.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -31,6 +34,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Pages\PageAddEditRemoveEmployees.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\PageMakeARental.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Pages\PageShowAllCustomers.xaml">

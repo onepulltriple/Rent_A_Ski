@@ -47,6 +47,11 @@ namespace Rent_A_Ski
             MainWindowFrame.Content = new PageShowCompleteRentalHistory();
         }
 
+        private void MakeARental(object sender, RoutedEventArgs e)
+        {
+            MainWindowFrame.Content = new PageMakeARental();
+        }
+
         private void ExitProgram(object sender, RoutedEventArgs e)
         {
             Environment.Exit(0);
