@@ -336,11 +336,11 @@ namespace Rent_A_Ski.Models
 
         public bool RentArticles(ObservableCollection<Article> articles_list, Customer customer)
         {
-            query = "INSERT INTO TABLES_RENTALS " +
+            // Add rentals to TABLE_RENTALS
+            query = 
+                "INSERT INTO TABLE_RENTALS " +
                 "(OutgoingDate, TABLE_ARTICLES_ID, TABLE_CUSTOMERS_ID, TABLE_EMPLOYEES_ID) VALUES " +
                 "(@outgoing_date, @article_id, @customer_id, @employee_id)";
-
-            command = new(query, connection);
 
             try
             {
@@ -348,13 +348,14 @@ namespace Rent_A_Ski.Models
 
                 foreach (Article item in articles_list)
                 {
+                    command = new(query, connection);
                     command.Parameters.AddWithValue("@outgoing_date", DateTime.Now);
                     command.Parameters.AddWithValue("@article_id", item.id);
                     command.Parameters.AddWithValue("@customer_id", customer.id);
                     //command.Parameters.AddWithValue("@employee_id", LoginWindow.Credentials.id);
                     command.Parameters.AddWithValue("@employee_id", 1);
 
-                    command.ExecuteNonQuery(); 
+                    command.ExecuteNonQuery();
                 }
 
             }
@@ -368,7 +369,38 @@ namespace Rent_A_Ski.Models
                 connection.Close();
             }
 
-            //query = $"UPDATE TABLE_ARTICLES SET TABLE_STATUS_ID = 1, Counter='{Article.Counter++}' WHERE id = '{Article.id}'";
+            // Change status and increment counter of affected articles in TABLE_ARTICLES
+            query = 
+                "UPDATE TABLE_ARTICLES SET " +
+                "TABLE_STATUS_ID = @status_id, " +
+                "Counter = @counter " +
+                "WHERE id = @article_id";
+
+            try
+            {
+                connection.Open();
+
+                foreach (Article item in articles_list)
+                {
+                    command = new(query, connection);
+                    command.Parameters.AddWithValue("@status_id", 
+                        Status.ListOfStatuses.First(x=>x.Description == "Reserved").id);
+                    command.Parameters.AddWithValue("@counter", item.Counter++);
+                    command.Parameters.AddWithValue("@article_id", item.id);
+
+                    command.ExecuteNonQuery();
+                }
+
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show(error.Message);
+                //throw;
+            }
+            finally
+            {
+                connection.Close();
+            }
 
             return true;
         }

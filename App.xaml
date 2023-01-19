@@ -4,5 +4,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:Rent_A_Ski"
     StartupUri="MainWindow.xaml">
+    <!--  Be sure to correct @employee_id placeholders in SQLController!  -->
     <Application.Resources />
 </Application>
