@@ -53,11 +53,6 @@ namespace Rent_A_Ski.Pages
             ListOfAvailableArticles = new ObservableCollection<Article>(tempList);
         }
 
-        private void CreateRental(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
 
         private void AddArticlesToStage(object sender, RoutedEventArgs e)
         {
@@ -74,6 +69,14 @@ namespace Rent_A_Ski.Pages
             {
                 ListOfAvailableArticles.Add(SelectedStagedArticle);
                 StagedArticlesList.Remove(SelectedStagedArticle);
+            }
+        }
+
+        private void CreateRental(object sender, RoutedEventArgs e)
+        {
+            if (StagedArticlesList != null && SelectedCustomer != null)
+            {
+                bool result = new SQLController().RentArticles(StagedArticlesList, SelectedCustomer);
             }
         }
 

@@ -20,7 +20,7 @@ namespace Rent_A_Ski
     /// </summary>
     public partial class LoginWindow : Window
     {
-        public Login Credentials { get; set; } = new();
+        public static Login Credentials { get; set; } = new();
 
         public LoginWindow()
         {
@@ -80,10 +80,11 @@ namespace Rent_A_Ski
             }
 
             Credentials.Password = PasswordBox01.Password;
-            bool result = new SQLController().AreCredentialsOK(Credentials.Username, Credentials.Password);
+            int? result = new SQLController().AreCredentialsOK(Credentials.Username, Credentials.Password);
 
-            if (result)
+            if (result != null)
             {
+                Credentials.id = (int)result;
                 MainWindow NewMainWindow = new();
                 NewMainWindow.Show();
                 this.Close();

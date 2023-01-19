@@ -30,8 +30,9 @@ namespace Rent_A_Ski.Models
             connection = new(connectionString);
         }
 
-        public bool AreCredentialsOK(string username, string password)
+        public int? AreCredentialsOK(string username, string password)
         {
+            int? foundid = null; 
             string foundPassword = "";
             query = "SELECT * FROM TABLE_EMPLOYEES WHERE Username = @UsernamePlaceholder";
 
@@ -45,19 +46,20 @@ namespace Rent_A_Ski.Models
 
                 if (reader.HasRows == false)
                 {
-                    return false;
+                    return null;
                 }
 
                 // If we reach this point, a username was found.
                 while (reader.Read())
                 {
+                    foundid = (int)reader["id"];
                     foundPassword = (string)reader["Password"];
                 }
             }
             catch (Exception error)
             {
                 MessageBox.Show(error.Message);
-                return false;
+                return null;
                 //throw;
             }
             finally
@@ -66,7 +68,10 @@ namespace Rent_A_Ski.Models
             }
 
             // Return the below resolved value directly.
-            return BCrypt.Net.BCrypt.Verify(password, foundPassword);
+            if (BCrypt.Net.BCrypt.Verify(password, foundPassword))
+                return foundid;
+            else
+                return null;
         }
 
         public ObservableCollection<Article> GetArticles()
@@ -327,6 +332,45 @@ namespace Rent_A_Ski.Models
             connection.Close();
 
             return tempListOfStatuses;
+        }
+
+        public bool RentArticles(ObservableCollection<Article> articles_list, Customer customer)
+        {
+            query = "INSERT INTO TABLES_RENTALS " +
+                "(OutgoingDate, TABLE_ARTICLES_ID, TABLE_CUSTOMERS_ID, TABLE_EMPLOYEES_ID) VALUES " +
+                "(@outgoing_date, @article_id, @customer_id, @employee_id)";
+
+            command = new(query, connection);
+
+            try
+            {
+                connection.Open();
+
+                foreach (Article item in articles_list)
+                {
+                    command.Parameters.AddWithValue("@outgoing_date", DateTime.Now);
+                    command.Parameters.AddWithValue("@article_id", item.id);
+                    command.Parameters.AddWithValue("@customer_id", customer.id);
+                    //command.Parameters.AddWithValue("@employee_id", LoginWindow.Credentials.id);
+                    command.Parameters.AddWithValue("@employee_id", 1);
+
+                    command.ExecuteNonQuery(); 
+                }
+
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show(error.Message);
+                //throw;
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            //query = $"UPDATE TABLE_ARTICLES SET TABLE_STATUS_ID = 1, Counter='{Article.Counter++}' WHERE id = '{Article.id}'";
+
+            return true;
         }
     }
 }
