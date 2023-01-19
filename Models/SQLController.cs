@@ -123,11 +123,14 @@ namespace Rent_A_Ski.Models
             return tempListOfArticles;
         }
 
-        public ObservableCollection<Rental> GetRentals()
+        public ObservableCollection<Rental> GetRentals(int? customer_id)
         {
             ObservableCollection<Rental> tempListOfRentals = new();
 
-            query = "SELECT * FROM TABLE_RENTALS";
+            if (customer_id != null)
+                query = $"SELECT * FROM TABLE_RENTALS WHERE TABLE_CUSTOMERS_ID = '{customer_id}'";
+            else
+                query = "SELECT * FROM TABLE_RENTALS";
 
             command = new(query, connection);
 
@@ -143,7 +146,10 @@ namespace Rent_A_Ski.Models
                         Rental tempRental = new();
                         tempRental.id = (int)reader["id"];
                         tempRental.OutgoingDate = (DateTime)reader["OutgoingDate"];
-                        tempRental.ReturnDate = (DateTime)reader["ReturnDate"];
+                        if (reader["IncomingDate"] != DBNull.Value)
+                            tempRental.IncomingDate = (DateTime)reader["IncomingDate"];
+                        else
+                            tempRental.IncomingDate = null;
                         tempRental.Article_id = (int)reader["TABLE_ARTICLES_ID"];
                         tempRental.Customer_id = (int)reader["TABLE_CUSTOMERS_ID"];
                         tempRental.Employee_id = (int)reader["TABLE_EMPLOYEES_ID"];
@@ -336,15 +342,15 @@ namespace Rent_A_Ski.Models
 
         public bool RentArticles(ObservableCollection<Article> articles_list, Customer customer)
         {
-            // Add rentals to TABLE_RENTALS
-            query = 
-                "INSERT INTO TABLE_RENTALS " +
-                "(OutgoingDate, TABLE_ARTICLES_ID, TABLE_CUSTOMERS_ID, TABLE_EMPLOYEES_ID) VALUES " +
-                "(@outgoing_date, @article_id, @customer_id, @employee_id)";
-
             try
             {
                 connection.Open();
+
+                // Add rentals to TABLE_RENTALS
+                query = 
+                    "INSERT INTO TABLE_RENTALS " +
+                    "(OutgoingDate, TABLE_ARTICLES_ID, TABLE_CUSTOMERS_ID, TABLE_EMPLOYEES_ID) VALUES " +
+                    "(@outgoing_date, @article_id, @customer_id, @employee_id)";
 
                 foreach (Article item in articles_list)
                 {
@@ -358,27 +364,12 @@ namespace Rent_A_Ski.Models
                     command.ExecuteNonQuery();
                 }
 
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show(error.Message);
-                //throw;
-            }
-            finally
-            {
-                connection.Close();
-            }
-
-            // Change status and increment counter of affected articles in TABLE_ARTICLES
-            query = 
-                "UPDATE TABLE_ARTICLES SET " +
-                "TABLE_STATUS_ID = @status_id, " +
-                "Counter = @counter " +
-                "WHERE id = @article_id";
-
-            try
-            {
-                connection.Open();
+                // Change status and increment counter of affected articles in TABLE_ARTICLES
+                query = 
+                    "UPDATE TABLE_ARTICLES SET " +
+                    "TABLE_STATUS_ID = @status_id, " +
+                    "Counter = @counter " +
+                    "WHERE id = @article_id";
 
                 foreach (Article item in articles_list)
                 {
@@ -390,11 +381,11 @@ namespace Rent_A_Ski.Models
 
                     command.ExecuteNonQuery();
                 }
-
             }
             catch (Exception error)
             {
                 MessageBox.Show(error.Message);
+                return false;
                 //throw;
             }
             finally

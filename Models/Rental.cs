@@ -23,19 +23,17 @@ namespace Rent_A_Ski.Models
             get { return outgoingdate.ToString("yyyy-MM-dd"); }
         }
 
-        private DateTime incomingdate;
+        private DateTime? incomingdate;
 
-        public DateTime IncomingDate
+        public DateTime? IncomingDate
         {
             set { incomingdate = value; }
         }
 
-        public string DateOfReturn
+        public string? DateOfReturn
         {
-            get { return incomingdate.ToString("yyyy-MM-dd"); }
+            get { return incomingdate?.ToString("yyyy-MM-dd"); }
         }
-
-        public DateTime ReturnDate { get; set; }
 
         public int Article_id { get; set; }
 
@@ -56,7 +54,7 @@ namespace Rent_A_Ski.Models
             Article.RefreshListOfArticles();
             Customer.RefreshListOfCustomers();
             Employee.RefreshListOfEmployees();
-            ListOfRentals = new SQLController().GetRentals();
+            ListOfRentals = new SQLController().GetRentals(null);
         }
 
     }

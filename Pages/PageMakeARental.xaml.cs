@@ -24,12 +24,11 @@ namespace Rent_A_Ski.Pages
     {
         public ObservableCollection<Article> ListOfAvailableArticles { get; set; }
 
-        public ObservableCollection<Customer> FullListOfCustomers
-        {
-            get => Customer.ListOfCustomers;
-        }
+        public ObservableCollection<Customer> FullListOfCustomers { get; set; }
 
         public ObservableCollection<Article> StagedArticlesList { get; set; } = new();
+
+        public ObservableCollection<Article> CustomersReservedArticlesList { get; set; } = new();
 
         public Article SelectedAvailableArticle { get; set; }
 
@@ -51,6 +50,8 @@ namespace Rent_A_Ski.Pages
             var tempList = Article.ListOfArticles.
                 Where(x => x.Status.Description == "Available").ToList();
             ListOfAvailableArticles = new ObservableCollection<Article>(tempList);
+
+            FullListOfCustomers = Customer.ListOfCustomers;
         }
 
 
@@ -76,7 +77,17 @@ namespace Rent_A_Ski.Pages
         {
             if (StagedArticlesList != null && SelectedCustomer != null)
             {
-                bool result = new SQLController().RentArticles(StagedArticlesList, SelectedCustomer);
+                bool rentals_logged = new SQLController().
+                    RentArticles(StagedArticlesList, SelectedCustomer);
+
+                if (rentals_logged)
+                {
+                    Rental.RefreshListOfRentals();
+
+                    //var tempList = Article.ListOfArticles.
+                    //    Where(x => x.Status.Description == "Reserved").ToList();
+
+                }
             }
         }
 
