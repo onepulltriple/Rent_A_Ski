@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Shell;
 
 namespace Rent_A_Ski.Pages
 {
@@ -46,10 +47,13 @@ namespace Rent_A_Ski.Pages
         {
             Article.RefreshListOfArticles();
             Customer.RefreshListOfCustomers();
+            Rental.RefreshListOfRentals();
 
-            var tempList = Article.ListOfArticles.
-                Where(x => x.Status.Description == "Available").ToList();
-            ListOfAvailableArticles = new ObservableCollection<Article>(tempList);
+            ListOfAvailableArticles = new ObservableCollection<Article>
+                (
+                Article.ListOfArticles.
+                Where(x => x.Status.Description == "Available")
+                );
 
             FullListOfCustomers = Customer.ListOfCustomers;
         }
@@ -83,17 +87,29 @@ namespace Rent_A_Ski.Pages
                 if (rentals_logged)
                 {
                     Rental.RefreshListOfRentals();
-
-                    //var tempList = Article.ListOfArticles.
-                    //    Where(x => x.Status.Description == "Reserved").ToList();
-
+                    StagedArticlesList.Clear();
+                    UpdateCustomersDisplayedArticles();
                 }
             }
         }
 
         private void CustomerChanged(object sender, SelectionChangedEventArgs e)
         {
+            UpdateCustomersDisplayedArticles();
+        }
 
+        private void UpdateCustomersDisplayedArticles()
+        {
+            CustomersReservedArticlesList.Clear();
+            
+            var tempList = Rental.ListOfRentals.
+                Where(rental => rental.Customer_id == SelectedCustomer.id).
+                Select(rental => rental.Article);
+
+            foreach (var item in tempList)
+            {
+                CustomersReservedArticlesList.Add(item);
+            }
         }
     }
 }
