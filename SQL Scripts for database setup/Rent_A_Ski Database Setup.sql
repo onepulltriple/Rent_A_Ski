@@ -15,7 +15,7 @@ CREATE TABLE TABLE_STATUS (
 
 INSERT INTO TABLE_STATUS (Description) VALUES 
 	('Available'),
-	('Reserved'),
+	('Rented'),
 	('Maintenance required'),
 	('Out for maintenance'),
 	('Repair required'),

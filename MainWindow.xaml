@@ -58,9 +58,9 @@
                 <TextBlock>Make a Rental</TextBlock>
             </Button>
             <Button Click="ShowCompleteRentalHistory" FontStyle="Italic">
-                <TextBlock>Show Complete Rental History</TextBlock>
+                <TextBlock>Show Entire Rental History</TextBlock>
             </Button>
-            <Button>
+            <Button Click="ShowOutstandingRentals">
                 <TextBlock>Show Outstanding Rentals</TextBlock>
             </Button>
         </UniformGrid>

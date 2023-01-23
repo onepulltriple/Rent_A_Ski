@@ -52,8 +52,8 @@ namespace Rent_A_Ski.Pages
 
             ListOfAvailableArticles = new ObservableCollection<Article>
                 (
-                Article.ListOfArticles.
-                Where(x => x.Status.Description == "Available")
+                    Article.ListOfArticles.
+                    Where(x => x.Status.Description == "Available")
                 );
 
             FullListOfCustomers = Customer.ListOfCustomers;

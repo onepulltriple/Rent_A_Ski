@@ -25,6 +25,9 @@
     <Compile Update="Pages\PageShowCompleteRentalHistory.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Pages\PageShowOutstandingRentals.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="LoginWindow.xaml">
@@ -46,6 +49,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Pages\PageShowCompleteRentalHistory.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\PageShowOutstandingRentals.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

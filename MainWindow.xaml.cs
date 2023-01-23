@@ -37,9 +37,9 @@ namespace Rent_A_Ski
             MainWindowFrame.Content = new PageShowAllCustomers();
         }
 
-        private void AddEditRemoveEmployees(object sender, RoutedEventArgs e)
+        private void MakeARental(object sender, RoutedEventArgs e)
         {
-            MainWindowFrame.Content = new PageAddEditRemoveEmployees();
+            MainWindowFrame.Content = new PageMakeARental();
         }
 
         private void ShowCompleteRentalHistory(object sender, RoutedEventArgs e)
@@ -47,14 +47,20 @@ namespace Rent_A_Ski
             MainWindowFrame.Content = new PageShowCompleteRentalHistory();
         }
 
-        private void MakeARental(object sender, RoutedEventArgs e)
+        private void ShowOutstandingRentals(object sender, RoutedEventArgs e)
         {
-            MainWindowFrame.Content = new PageMakeARental();
+            MainWindowFrame.Content = new PageShowOutstandingRentals();
+        }
+
+        private void AddEditRemoveEmployees(object sender, RoutedEventArgs e)
+        {
+            MainWindowFrame.Content = new PageAddEditRemoveEmployees();
         }
 
         private void ExitProgram(object sender, RoutedEventArgs e)
         {
             Environment.Exit(0);
         }
+
     }
 }

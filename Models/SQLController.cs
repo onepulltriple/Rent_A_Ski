@@ -375,7 +375,7 @@ namespace Rent_A_Ski.Models
                 {
                     command = new(query, connection);
                     command.Parameters.AddWithValue("@status_id", 
-                        Status.ListOfStatuses.First(x=>x.Description == "Reserved").id);
+                        Status.ListOfStatuses.First(x=>x.Description == "Rented").id);
                     command.Parameters.AddWithValue("@counter", item.Counter++);
                     command.Parameters.AddWithValue("@article_id", item.id);
 

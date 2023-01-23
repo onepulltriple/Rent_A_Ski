@@ -37,8 +37,8 @@ namespace Rent_A_Ski.Pages
         {
             Article.RefreshListOfArticles();
             Customer.RefreshListOfCustomers();
-            Rental.RefreshListOfRentals();
             Employee.RefreshListOfEmployees();
+            Rental.RefreshListOfRentals();
 
             FullListOfRentals = Rental.ListOfRentals;
         }
