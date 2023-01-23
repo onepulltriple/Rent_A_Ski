@@ -34,6 +34,7 @@ namespace Rent_A_Ski.Pages
         public Article SelectedAvailableArticle { get; set; }
 
         public Article SelectedStagedArticle { get; set; }
+
         public Customer SelectedCustomer { get; set; }
 
         public PageMakeARental()

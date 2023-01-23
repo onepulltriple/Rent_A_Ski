@@ -6,7 +6,7 @@
     xmlns:local="clr-namespace:Rent_A_Ski.Pages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="PageShowCompleteRentalHistory"
-    d:DesignHeight="411"
+    d:DesignHeight="407"
     d:DesignWidth="450"
     Background="White"
     mc:Ignorable="d">
@@ -25,14 +25,13 @@
             SelectionMode="Single">
 
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding FirstName}" Header="First Name" />
-                <DataGridTextColumn Binding="{Binding LastName}" Header="Last Name" />
-                <DataGridTextColumn Binding="{Binding Email}" Header="Email" />
-                <DataGridTextColumn Binding="{Binding DateOfBirth}" Header="Birthday" />
-                <DataGridTextColumn Binding="{Binding Address}" Header="Street Address" />
-                <DataGridTextColumn Binding="{Binding City}" Header="City" />
-                <DataGridTextColumn Binding="{Binding ZIP}" Header="ZIP Code" />
-                <DataGridTextColumn Binding="{Binding Employee.Username}" Header="Registered by" />
+                <DataGridTextColumn Binding="{Binding Article.Category.Name}" Header="Category" />
+                <DataGridTextColumn Binding="{Binding Article.Name}" Header="Article Description" />
+                <DataGridTextColumn Binding="{Binding Article.SerialNumber}" Header="Serial Number" />
+                <DataGridTextColumn Binding="{Binding Customer.FirstName}" Header="First Name" />
+                <DataGridTextColumn Binding="{Binding Customer.LastName}" Header="Last Name" />
+                <DataGridTextColumn Binding="{Binding DateOfRental}" Header="Rented" />
+                <DataGridTextColumn Binding="{Binding DateOfReturn}" Header="Returned" />
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

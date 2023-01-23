@@ -25,6 +25,8 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="80*" MinHeight="400px" />
+            <RowDefinition Height="4px" />
+
             <RowDefinition
                 Height="10*"
                 MinHeight="75px"
@@ -40,8 +42,12 @@
             Grid.Row="0"
             NavigationUIVisibility="Hidden" />
 
+        <GridSplitter
+            Grid.Row="1"
+            HorizontalAlignment="Stretch"
+            Background="Gray" />
 
-        <UniformGrid Grid.Row="1" Rows="1">
+        <UniformGrid Grid.Row="2" Rows="1">
             <Button Click="ShowCompleteInventory">
                 <TextBlock>Show Complete Inventory</TextBlock>
             </Button>
@@ -59,7 +65,7 @@
             </Button>
         </UniformGrid>
 
-        <UniformGrid Grid.Row="2" Rows="1">
+        <UniformGrid Grid.Row="3" Rows="1">
             <Button>
                 <TextBlock>Add/Edit/Remove Inventory</TextBlock>
             </Button>
@@ -76,9 +82,6 @@
                 <TextBlock>Exit</TextBlock>
             </Button>
         </UniformGrid>
-
-
-
 
     </Grid>
 </Window>

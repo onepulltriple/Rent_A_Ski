@@ -22,10 +22,7 @@ namespace Rent_A_Ski.Pages
     /// </summary>
     public partial class PageShowCompleteRentalHistory : Page
     {
-        public ObservableCollection<Rental> FullListOfRentals
-        {
-            get => Rental.ListOfRentals;
-        }
+        public ObservableCollection<Rental> FullListOfRentals { get; set; }
 
         public Rental SelectedRental { get; set; }
 
@@ -38,7 +35,12 @@ namespace Rent_A_Ski.Pages
 
         public void InitializeData()
         {
+            Article.RefreshListOfArticles();
+            Customer.RefreshListOfCustomers();
             Rental.RefreshListOfRentals();
+            Employee.RefreshListOfEmployees();
+
+            FullListOfRentals = Rental.ListOfRentals;
         }
     }
 }

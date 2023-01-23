@@ -6,7 +6,7 @@
     xmlns:local="clr-namespace:Rent_A_Ski.Pages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="PageMakeARental"
-    d:DesignHeight="411"
+    d:DesignHeight="407"
     d:DesignWidth="450"
     Background="White"
     mc:Ignorable="d">
@@ -27,7 +27,7 @@
             <RowDefinition Height="0.5*" />
             <RowDefinition Height="4.5*" />
             <RowDefinition Height="0.5*" />
-            <RowDefinition Height="4px" />
+            <RowDefinition Height="1px" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />

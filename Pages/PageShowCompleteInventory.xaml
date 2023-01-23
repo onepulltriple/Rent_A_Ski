@@ -6,7 +6,7 @@
     xmlns:local="clr-namespace:Rent_A_Ski.Pages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="PageShowCompleteInventory"
-    d:DesignHeight="411"
+    d:DesignHeight="407"
     d:DesignWidth="640"
     Background="White"
     mc:Ignorable="d">
