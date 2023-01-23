@@ -22,9 +22,12 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="4.5*" />
-            <RowDefinition Height="7px" />
             <RowDefinition Height="0.5*" />
+            <RowDefinition Height="4.5*" />
+            <!--<RowDefinition Height="60px" />
+            <RowDefinition Height="7px" />-->
+            <RowDefinition Height="67px" MaxHeight="67px" />
+            <RowDefinition Height="7px" />
             <RowDefinition Height="4.5*" />
             <RowDefinition Height="0.5*" />
             <RowDefinition Height="1px" />
@@ -36,8 +39,12 @@
         </Grid.ColumnDefinitions>
 
 
+        <TextBlock Grid.Row="0" Grid.Column="0">
+            Articles available to rent
+        </TextBlock>
+
         <DataGrid
-            Grid.Row="0"
+            Grid.Row="1"
             Grid.Column="0"
             AutoGenerateColumns="False"
             IsReadOnly="True"
@@ -55,6 +62,7 @@
         <UniformGrid
             Grid.Row="2"
             Grid.Column="0"
+            Height="67px"
             Rows="1">
             <Button Name="AddArticlesToStageButton" Click="AddArticlesToStage">
                 <TextBlock>Add Article(s) to Stage</TextBlock>
@@ -65,7 +73,7 @@
         </UniformGrid>
 
         <DataGrid
-            Grid.Row="3"
+            Grid.Row="4"
             AutoGenerateColumns="False"
             IsReadOnly="True"
             ItemsSource="{Binding StagedArticlesList}"
@@ -79,63 +87,111 @@
             </DataGrid.Columns>
         </DataGrid>
 
+        <GridSplitter
+            Grid.Row="4"
+            Grid.Column="0"
+            Height="7px"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Top"
+            Background="Gray" />
+
         <Button
             Name="CreateRentalButton"
-            Grid.Row="4"
+            Grid.Row="5"
             Width="200"
             Click="CreateRental">
             <TextBlock>Rent Item to Customer</TextBlock>
         </Button>
 
-
         <GridSplitter
-            Grid.Row="1"
+            Grid.Row="6"
             Grid.Column="0"
             HorizontalAlignment="Stretch"
             Background="Gray" />
+
+
+        <GridSplitter
+            Grid.Row="0"
+            Grid.Column="1"
+            HorizontalAlignment="Stretch"
+            Background="White" />
         <GridSplitter
             Grid.Row="1"
             Grid.Column="1"
             HorizontalAlignment="Stretch"
-            Background="Gray" />
+            Background="White" />
         <GridSplitter
-            Grid.Row="1"
-            Grid.Column="2"
+            Grid.Row="2"
+            Grid.Column="1"
+            HorizontalAlignment="Stretch"
+            Background="White" />
+        <GridSplitter
+            Grid.Row="3"
+            Grid.Column="1"
+            HorizontalAlignment="Stretch"
+            Background="White" />
+        <GridSplitter
+            Grid.Row="4"
+            Grid.Column="1"
+            HorizontalAlignment="Stretch"
+            Background="White" />
+        <GridSplitter
+            Grid.Row="5"
+            Grid.Column="1"
+            HorizontalAlignment="Stretch"
+            Background="White" />
+        <GridSplitter
+            Grid.Row="6"
+            Grid.Column="1"
             HorizontalAlignment="Stretch"
             Background="Gray" />
 
 
-        <Grid Grid.Row="0" Grid.Column="2">
+        <TextBlock Grid.Row="0" Grid.Column="2">
+            Select Customer
+        </TextBlock>
+
+        <!--<GridSplitter
+            Grid.Row="1"
+            Grid.Column="2"
+            HorizontalAlignment="Stretch"
+            Background="Gray" />-->
+
+
+        <!--<Grid Grid.Row="0" Grid.Column="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="40px" />
-            </Grid.RowDefinitions>
-
-            <DataGrid
-                Grid.Row="0"
-                AutoGenerateColumns="False"
-                IsReadOnly="True"
-                ItemsSource="{Binding FullListOfCustomers}"
-                SelectedItem="{Binding SelectedCustomer}"
-                SelectionChanged="CustomerChanged"
-                SelectionMode="Single">
-
-                <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding FirstName}" Header="First Name" />
-                    <DataGridTextColumn Binding="{Binding LastName}" Header="Last Name" />
-                    <DataGridTextColumn Binding="{Binding Email}" Header="Email" />
-                    <DataGridTextColumn Binding="{Binding DateOfBirth}" Header="Birthday" />
-                </DataGrid.Columns>
-            </DataGrid>
-
-            <TextBlock
-                Grid.Row="1"
-                Background="Red"
-                Text="{Binding SelectedCustomer.FirstName}" />
-        </Grid>
+            </Grid.RowDefinitions>-->
 
         <DataGrid
+            Grid.Row="1"
+            Grid.Column="2"
+            AutoGenerateColumns="False"
+            IsReadOnly="True"
+            ItemsSource="{Binding FullListOfCustomers}"
+            SelectedItem="{Binding SelectedCustomer}"
+            SelectionChanged="CustomerChanged"
+            SelectionMode="Single">
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding FirstName}" Header="First Name" />
+                <DataGridTextColumn Binding="{Binding LastName}" Header="Last Name" />
+                <DataGridTextColumn Binding="{Binding Email}" Header="Email" />
+                <DataGridTextColumn Binding="{Binding DateOfBirth}" Header="Birthday" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <TextBlock Grid.Row="2" Grid.Column="2">Currently holds</TextBlock>
+
+        <TextBlock
             Grid.Row="3"
+            Grid.Column="2"
+            Text="{Binding SelectedCustomer.FirstName}" />
+        <!--</Grid>-->
+
+        <DataGrid
+            Grid.Row="4"
             Grid.Column="2"
             AutoGenerateColumns="False"
             IsReadOnly="True"
@@ -148,18 +204,10 @@
             </DataGrid.Columns>
         </DataGrid>
 
+        <TextBlock Grid.Row="5" Grid.Column="2">Placeholder</TextBlock>
+
         <GridSplitter
-            Grid.Row="5"
-            Grid.Column="0"
-            HorizontalAlignment="Stretch"
-            Background="Gray" />
-        <GridSplitter
-            Grid.Row="5"
-            Grid.Column="1"
-            HorizontalAlignment="Stretch"
-            Background="Gray" />
-        <GridSplitter
-            Grid.Row="5"
+            Grid.Row="6"
             Grid.Column="2"
             HorizontalAlignment="Stretch"
             Background="Gray" />

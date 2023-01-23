@@ -32,6 +32,7 @@
                 <DataGridTextColumn Binding="{Binding Customer.LastName}" Header="Last Name" />
                 <DataGridTextColumn Binding="{Binding DateOfRental}" Header="Rented" />
                 <DataGridTextColumn Binding="{Binding DateOfReturn}" Header="Returned" />
+                <DataGridTextColumn Binding="{Binding Employee.Username}" Header="Logged by" />
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
