@@ -31,13 +31,9 @@
         <!--  first column  -->
         <Grid Grid.Row="0" Grid.Column="0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="430*" MinHeight="100px" />
+                <RowDefinition Height="430*" MinHeight="160px" />
                 <RowDefinition Height="6px" />
                 <RowDefinition Height="430*" MinHeight="100px" />
-                <RowDefinition
-                    Height="100*"
-                    MinHeight="60px"
-                    MaxHeight="80px" />
             </Grid.RowDefinitions>
 
             <!--  upper left quarter  -->
@@ -45,6 +41,10 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="30px" />
                     <RowDefinition Height="400*" MinHeight="70px" />
+                    <RowDefinition
+                        Height="100*"
+                        MinHeight="60px"
+                        MaxHeight="80px" />
                 </Grid.RowDefinitions>
 
                 <TextBlock Grid.Row="0" TextAlignment="Left">
@@ -65,6 +65,34 @@
                         <DataGridTextColumn Binding="{Binding PricePerDay}" Header="Price Per Day" />
                     </DataGrid.Columns>
                 </DataGrid>
+
+                <!--  button grid (horizontal)  -->
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Button
+                        Name="AddArticlesToStageButton"
+                        Grid.Column="0"
+                        Click="AddArticlesToStage">
+                        <TextBlock>Add Item to Stage</TextBlock>
+                    </Button>
+                    <Button
+                        Name="RemoveArticlesFromStageButton"
+                        Grid.Column="1"
+                        Click="RemoveArticlesFromStage">
+                        <TextBlock>Remove Item from Stage</TextBlock>
+                    </Button>
+                    <Button
+                        Name="CreateRentalButton"
+                        Grid.Column="2"
+                        Background="Cyan"
+                        Click="CreateRental">
+                        <TextBlock>Rent Item(s) to Customer</TextBlock>
+                    </Button>
+                </Grid>
             </Grid>
 
             <GridSplitter
@@ -99,34 +127,6 @@
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>
-
-            <!--  button grid (horizontal)  -->
-            <Grid Grid.Row="3">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-                <Button
-                    Name="AddArticlesToStageButton"
-                    Grid.Column="0"
-                    Click="AddArticlesToStage">
-                    <TextBlock>Add Item to Stage</TextBlock>
-                </Button>
-                <Button
-                    Name="RemoveArticlesFromStageButton"
-                    Grid.Column="1"
-                    Click="RemoveArticlesFromStage">
-                    <TextBlock>Remove Item from Stage</TextBlock>
-                </Button>
-                <Button
-                    Name="CreateRentalButton"
-                    Grid.Column="2"
-                    Background="Cyan"
-                    Click="CreateRental">
-                    <TextBlock>Rent Item(s) to Customer</TextBlock>
-                </Button>
-            </Grid>
         </Grid>
 
         <!--  second column  -->
@@ -142,7 +142,6 @@
             HorizontalAlignment="Stretch"
             VerticalAlignment="Bottom"
             Fill="Gray" />
-
 
         <!--  third column  -->
         <Grid Grid.Row="0" Grid.Column="2">
@@ -215,44 +214,13 @@
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>
-
-            <!--<DataGrid
-                Grid.Row="1"
-                AutoGenerateColumns="False"
-                IsReadOnly="True"
-                ItemsSource="{Binding FullListOfCustomers}"
-                SelectedItem="{Binding SelectedCustomer}"
-                SelectionChanged="CustomerChanged"
-                SelectionMode="Single">
-
-                <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding FirstName}" Header="First Name" />
-                    <DataGridTextColumn Binding="{Binding LastName}" Header="Last Name" />
-                    <DataGridTextColumn Binding="{Binding Email}" Header="Email" />
-                    <DataGridTextColumn Binding="{Binding DateOfBirth}" Header="Birthday" />
-                </DataGrid.Columns>
-            </DataGrid>-->
-
-            <!--<TextBlock Grid.Row="2" Grid.Column="2">Currently holds</TextBlock>
-
-            <TextBlock Grid.Row="3" Text="{Binding SelectedCustomer.FirstName}" />-->
-
-            <!--<DataGrid
-                Grid.Row="4"
-                AutoGenerateColumns="False"
-                IsReadOnly="True"
-                ItemsSource="{Binding CustomersReservedArticlesList}">
-
-                <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding Category.Name}" Header="Category" />
-                    <DataGridTextColumn Binding="{Binding Name}" Header="Item Description" />
-                    <DataGridTextColumn Binding="{Binding PricePerDay}" Header="Price Per Day" />
-                </DataGrid.Columns>
-            </DataGrid>-->
-
         </Grid>
 
+        <Rectangle
+            Grid.Column="2"
+            Height="1px"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Bottom"
+            Fill="Gray" />
     </Grid>
-
-
 </Page>
