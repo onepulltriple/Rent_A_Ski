@@ -20,12 +20,173 @@
         </Style>
     </Page.Resources>
 
+    <!--  outermost grid  -->
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="6px" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <!--  first column  -->
+        <Grid Grid.Column="0" Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.5*" />
+                <RowDefinition Height="4*" />
+                <RowDefinition Height="6px" />
+                <RowDefinition Height="4*" />
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0">
+                Items available to rent
+            </TextBlock>
+
+            <DataGrid
+                Grid.Row="1"
+                AutoGenerateColumns="False"
+                IsReadOnly="True"
+                ItemsSource="{Binding ListOfAvailableArticles}"
+                SelectedItem="{Binding SelectedAvailableArticle}"
+                SelectionMode="Extended">
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Category.Name}" Header="Category" />
+                    <DataGridTextColumn Binding="{Binding Name}" Header="Item Description" />
+                    <DataGridTextColumn Binding="{Binding PricePerDay}" Header="Price Per Day" />
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <GridSplitter Grid.Row="2" 
+                          Grid.Column="0"
+                          Background="Gray" 
+                          HorizontalAlignment="Stretch"/>
+
+            <DataGrid
+                Grid.Row="3"
+                AutoGenerateColumns="False"
+                IsReadOnly="True"
+                ItemsSource="{Binding StagedArticlesList}"
+                SelectedItem="{Binding SelectedStagedArticle}"
+                SelectionMode="Single">
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Category.Name}" Header="Category" />
+                    <DataGridTextColumn Binding="{Binding Name}" Header="Item Description" />
+                    <DataGridTextColumn Binding="{Binding PricePerDay}" Header="Price Per Day" />
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <!--  button grid (horizontal)  -->
+            <Grid Grid.Row="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Button
+                    Name="AddArticlesToStageButton"
+                    Grid.Column="0"
+                    Click="AddArticlesToStage">
+                    <TextBlock>Add Item to Stage</TextBlock>
+                </Button>
+                <Button
+                    Name="RemoveArticlesFromStageButton"
+                    Grid.Column="1"
+                    Click="RemoveArticlesFromStage">
+                    <TextBlock>Remove Item from Stage</TextBlock>
+                </Button>
+                <Button
+                    Name="CreateRentalButton"
+                    Grid.Column="2"
+                    Background="Cyan"
+                    Click="CreateRental">
+                    <TextBlock>Rent Item(s) to Customer</TextBlock>
+                </Button>
+            </Grid>
+        </Grid>
+
+        <!--  second column  -->
+        <GridSplitter
+            Grid.Column="1"
+            Grid.Row="0"
+            HorizontalAlignment="Stretch"
+            Background="White" />
+
+        <Rectangle Grid.Column="1"
+                   Fill="Gray"
+                   Height="1px"
+                   VerticalAlignment="Bottom"
+                   HorizontalAlignment="Stretch"/>
+
+        <!--  third column  -->
+        <Grid Grid.Column="2" Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.5*" />
+                <RowDefinition Height="4*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="6px" />
+                <RowDefinition Height="4*" />
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0">
+                Select Customer
+            </TextBlock>
+
+            <DataGrid
+                Grid.Row="1"
+                AutoGenerateColumns="False"
+                IsReadOnly="True"
+                ItemsSource="{Binding FullListOfCustomers}"
+                SelectedItem="{Binding SelectedCustomer}"
+                SelectionChanged="CustomerChanged"
+                SelectionMode="Single">
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding FirstName}" Header="First Name" />
+                    <DataGridTextColumn Binding="{Binding LastName}" Header="Last Name" />
+                    <DataGridTextColumn Binding="{Binding Email}" Header="Email" />
+                    <DataGridTextColumn Binding="{Binding DateOfBirth}" Header="Birthday" />
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <TextBlock Grid.Row="2" Grid.Column="2">Currently holds</TextBlock>
+
+            <TextBlock Grid.Row="3" Text="{Binding SelectedCustomer.FirstName}" />
+
+            <DataGrid
+                Grid.Row="4"
+                AutoGenerateColumns="False"
+                IsReadOnly="True"
+                ItemsSource="{Binding CustomersReservedArticlesList}">
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Category.Name}" Header="Category" />
+                    <DataGridTextColumn Binding="{Binding Name}" Header="Item Description" />
+                    <DataGridTextColumn Binding="{Binding PricePerDay}" Header="Price Per Day" />
+                </DataGrid.Columns>
+            </DataGrid>
+
+        </Grid>
+
+    </Grid>
+
+
+
+
+
+
+
+
+
+    <!--<Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="0.5*" />
             <RowDefinition Height="4.5*" />
-            <!--<RowDefinition Height="60px" />
+    -->
+    <!--<RowDefinition Height="60px" />
             <RowDefinition Height="7px" />-->
+    <!--
             <RowDefinition Height="67px" MaxHeight="67px" />
             <RowDefinition Height="7px" />
             <RowDefinition Height="4.5*" />
@@ -151,18 +312,20 @@
             Select Customer
         </TextBlock>
 
-        <!--<GridSplitter
+    -->
+    <!--<GridSplitter
             Grid.Row="1"
             Grid.Column="2"
             HorizontalAlignment="Stretch"
             Background="Gray" />-->
 
 
-        <!--<Grid Grid.Row="0" Grid.Column="2">
+    <!--<Grid Grid.Row="0" Grid.Column="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="40px" />
             </Grid.RowDefinitions>-->
+    <!--
 
         <DataGrid
             Grid.Row="1"
@@ -188,7 +351,9 @@
             Grid.Row="3"
             Grid.Column="2"
             Text="{Binding SelectedCustomer.FirstName}" />
-        <!--</Grid>-->
+    -->
+    <!--</Grid>-->
+    <!--
 
         <DataGrid
             Grid.Row="4"
@@ -211,5 +376,5 @@
             Grid.Column="2"
             HorizontalAlignment="Stretch"
             Background="Gray" />
-    </Grid>
+    </Grid>-->
 </Page>
