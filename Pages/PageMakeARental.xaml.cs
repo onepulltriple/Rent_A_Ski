@@ -29,6 +29,26 @@ namespace Rent_A_Ski.Pages
 
         public ObservableCollection<Article> StagedArticlesList { get; set; } = new();
 
+        public bool AreAnyArticlesStaged {
+            get
+            {
+                if (StagedArticlesList.Count > 0)
+                    return true;
+                else
+                    return false;
+            }
+        }
+
+        public bool IsACustomerSelected {
+            get
+            {
+                if (SelectedCustomer != null)
+                    return true;
+                else
+                    return false;
+            }
+        }
+
         public ObservableCollection<Article> CustomersReservedArticlesList { get; set; } = new();
 
         public Article SelectedAvailableArticle { get; set; }
@@ -67,6 +87,10 @@ namespace Rent_A_Ski.Pages
                 StagedArticlesList.Add(SelectedAvailableArticle);
                 ListOfAvailableArticles.Remove(SelectedAvailableArticle);
             }
+
+            AddArticlesToStageButton.IsEnabled = false;
+            if (IsACustomerSelected)
+                CreateRentalButton.IsEnabled = true;
         }
 
         private void RemoveArticlesFromStage(object sender, RoutedEventArgs e)
@@ -76,11 +100,15 @@ namespace Rent_A_Ski.Pages
                 ListOfAvailableArticles.Add(SelectedStagedArticle);
                 StagedArticlesList.Remove(SelectedStagedArticle);
             }
+
+            RemoveArticlesFromStageButton.IsEnabled = false;
+            if (!AreAnyArticlesStaged)
+                CreateRentalButton.IsEnabled = false;
         }
 
         private void CreateRental(object sender, RoutedEventArgs e)
         {
-            if (StagedArticlesList != null && SelectedCustomer != null)
+            if (AreAnyArticlesStaged && IsACustomerSelected)
             {
                 bool rentals_logged = new SQLController().
                     RentArticles(StagedArticlesList, SelectedCustomer);
@@ -90,13 +118,33 @@ namespace Rent_A_Ski.Pages
                     Rental.RefreshListOfRentals();
                     StagedArticlesList.Clear();
                     UpdateCustomersDisplayedArticles();
+
+                    NotificationLabel.Content = 
+                        "Item(s) successfully rented to " +
+                        $"{SelectedCustomer.FirstName} {SelectedCustomer.LastName}.";
+                    NotificationLabel.Visibility = Visibility.Visible;
+
+                    CreateRentalButton.IsEnabled = false;
                 }
             }
+        }
+
+        private void AvailableArticleChanged(object sender, SelectionChangedEventArgs e)
+        {
+            AddArticlesToStageButton.IsEnabled = true;
+            NotificationLabel.Visibility = Visibility.Hidden;
+        }
+
+        private void StagedArticleSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            RemoveArticlesFromStageButton.IsEnabled = true;
         }
 
         private void CustomerChanged(object sender, SelectionChangedEventArgs e)
         {
             UpdateCustomersDisplayedArticles();
+            if (AreAnyArticlesStaged)
+                CreateRentalButton.IsEnabled = true;
         }
 
         private void UpdateCustomersDisplayedArticles()
@@ -111,6 +159,8 @@ namespace Rent_A_Ski.Pages
             {
                 CustomersReservedArticlesList.Add(item);
             }
+
+            NotificationLabel.Visibility = Visibility.Hidden;
         }
     }
 }

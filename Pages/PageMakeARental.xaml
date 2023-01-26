@@ -57,7 +57,8 @@
                     IsReadOnly="True"
                     ItemsSource="{Binding ListOfAvailableArticles}"
                     SelectedItem="{Binding SelectedAvailableArticle}"
-                    SelectionMode="Single">
+                    SelectionMode="Single"
+                    SelectionChanged="AvailableArticleChanged">
 
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding Category.Name}" Header="Category" />
@@ -76,20 +77,23 @@
                     <Button
                         Name="AddArticlesToStageButton"
                         Grid.Column="0"
-                        Click="AddArticlesToStage">
+                        Click="AddArticlesToStage"
+                        IsEnabled="False">
                         <TextBlock>Add Item to Stage</TextBlock>
                     </Button>
                     <Button
                         Name="RemoveArticlesFromStageButton"
                         Grid.Column="1"
-                        Click="RemoveArticlesFromStage">
+                        Click="RemoveArticlesFromStage"
+                        IsEnabled="False">
                         <TextBlock>Remove Item from Stage</TextBlock>
                     </Button>
                     <Button
                         Name="CreateRentalButton"
                         Grid.Column="2"
                         Background="Cyan"
-                        Click="CreateRental">
+                        Click="CreateRental"
+                        IsEnabled="False">
                         <TextBlock>Rent Item(s) to Customer</TextBlock>
                     </Button>
                 </Grid>
@@ -118,7 +122,8 @@
                     IsReadOnly="True"
                     ItemsSource="{Binding StagedArticlesList}"
                     SelectedItem="{Binding SelectedStagedArticle}"
-                    SelectionMode="Single">
+                    SelectionMode="Single"
+                    SelectionChanged="StagedArticleSelectionChanged">
 
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding Category.Name}" Header="Category" />
@@ -150,8 +155,8 @@
                 <RowDefinition Height="6px" />
                 <RowDefinition Height="430*" MinHeight="100px" />
                 <RowDefinition
-                    Height="100*"
-                    MinHeight="60px"
+                    Height="32*"
+                    MinHeight="32px"
                     MaxHeight="80px" />
             </Grid.RowDefinitions>
 
@@ -202,7 +207,7 @@
                 </TextBlock>
 
                 <DataGrid
-                    Grid.Row="4"
+                    Grid.Row="1"
                     AutoGenerateColumns="False"
                     IsReadOnly="True"
                     ItemsSource="{Binding CustomersReservedArticlesList}">
@@ -214,6 +219,14 @@
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>
+
+            <Label
+                Name="NotificationLabel"
+                Grid.Row="3"
+                Content=""
+                FontSize="14"
+                Foreground="Green"
+                Visibility="Hidden" />
         </Grid>
 
         <Rectangle
