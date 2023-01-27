@@ -1,0 +1,275 @@
+﻿<Page
+    x:Class="Rent_A_Ski.Pages.PageMakeAReturn"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Rent_A_Ski.Pages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="PageMakeAReturn"
+    d:DesignHeight="407"
+    d:DesignWidth="800"
+    Background="White"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <Style BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="{x:Type TextBlock}">
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+            <Setter Property="TextAlignment" Value="Center" />
+            <Setter Property="Padding" Value="8,4,8,4" />
+        </Style>
+    </Page.Resources>
+
+    <!--  outermost grid  -->
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition MinWidth="364px" />
+            <ColumnDefinition Width="6px" />
+            <ColumnDefinition MinWidth="364px" />
+        </Grid.ColumnDefinitions>
+
+        <!--  first column  -->
+        <Grid Grid.Row="0" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="430*" MinHeight="100px" />
+                <RowDefinition Height="6px" />
+                <RowDefinition Height="430*" MinHeight="160px" />
+            </Grid.RowDefinitions>
+
+            <!--  upper left quarter  -->
+            <Grid Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30px" />
+                    <RowDefinition Height="400*" MinHeight="70px" />
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" TextAlignment="Left">
+                    Select customer
+                </TextBlock>
+
+                <DataGrid
+                    Grid.Row="1"
+                    AutoGenerateColumns="False"
+                    IsReadOnly="True"
+                    ItemsSource="{Binding FullListOfCustomers}"
+                    SelectedItem="{Binding SelectedCustomer}"
+                    SelectionChanged="CustomerChanged"
+                    SelectionMode="Single">
+
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding FirstName}" Header="First Name" />
+                        <DataGridTextColumn Binding="{Binding LastName}" Header="Last Name" />
+                        <DataGridTextColumn Binding="{Binding Email}" Header="Email" />
+                        <DataGridTextColumn Binding="{Binding DateOfBirth}" Header="Birthday" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+
+            <GridSplitter
+                Grid.Row="1"
+                Grid.Column="0"
+                HorizontalAlignment="Stretch"
+                Background="Gray" />
+
+            <!--  lower left quarter  -->
+            <Grid Grid.Row="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30px" />
+                    <RowDefinition Height="400*" MinHeight="70px" />
+                    <RowDefinition
+                        Height="100*"
+                        MinHeight="60px"
+                        MaxHeight="80px" />
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" TextAlignment="Left">
+                    Selected customer's currently rented item(s)
+                </TextBlock>
+
+                <DataGrid
+                    Grid.Row="1"
+                    AutoGenerateColumns="False"
+                    IsReadOnly="True"
+                    ItemsSource="{Binding CustomersReservedArticlesList}">
+
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding Category.Name}" Header="Category" />
+                        <DataGridTextColumn Binding="{Binding Name}" Header="Item Description" />
+                        <DataGridTextColumn Binding="{Binding PricePerDay}" Header="Price Per Day" />
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <!--  button grid (horizontal)  -->
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Button
+                        Name="StageArticleForReturnButton"
+                        Grid.Column="0"
+                        Click="StageArticleForReturn"
+                        IsEnabled="False">
+                        <TextBlock>Stage Item for Return</TextBlock>
+                    </Button>
+                    <Button
+                        Name="RemoveArticleFromStageButton"
+                        Grid.Column="1"
+                        Click="RemoveArticleFromStage"
+                        IsEnabled="False">
+                        <TextBlock>Remove Item from Stage</TextBlock>
+                    </Button>
+                    <Button
+                        Name="MarkArticleForRepairButton"
+                        Grid.Column="2"
+                        Background="PaleVioletRed"
+                        Click="MarkArticleForRepair"
+                        IsEnabled="False">
+                        <TextBlock>Mark Article for Repair</TextBlock>
+                    </Button>
+                </Grid>
+
+            </Grid>
+
+        </Grid>
+
+        <Rectangle
+            Grid.Column="0"
+            Height="1px"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Bottom"
+            Fill="Gray" />
+
+        <!--  second column  -->
+        <GridSplitter
+            Grid.Row="0"
+            Grid.Column="1"
+            HorizontalAlignment="Stretch"
+            Background="White" />
+
+        <Rectangle
+            Grid.Column="1"
+            Height="1px"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Bottom"
+            Fill="Gray" />
+
+        <!--  third column  -->
+        <Grid Grid.Row="0" Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="430*" MinHeight="100px" />
+                <RowDefinition Height="6px" />
+                <RowDefinition Height="430*" MinHeight="160px" />
+                <RowDefinition
+                    Height="32*"
+                    MinHeight="32px"
+                    MaxHeight="80px" />
+            </Grid.RowDefinitions>
+
+            <!--  upper right quarter  -->
+            <Grid Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30px" />
+                    <RowDefinition Height="400*" MinHeight="70px" />
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" TextAlignment="Left">
+                    Item(s) staged for return
+                </TextBlock>
+
+                <DataGrid
+                    Grid.Row="1"
+                    AutoGenerateColumns="False"
+                    IsReadOnly="True"
+                    ItemsSource="{Binding ArticlesStagedForReturnList}"
+                    SelectedItem="{Binding SelectedStagedForReturnArticle}"
+                    SelectionChanged="ArticleStagedForReturnSelectionChanged"
+                    SelectionMode="Single">
+
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding Category.Name}" Header="Category" />
+                        <DataGridTextColumn Binding="{Binding Name}" Header="Item Description" />
+                        <DataGridTextColumn Binding="{Binding PricePerDay}" Header="Price Per Day" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+
+            <GridSplitter
+                Grid.Row="1"
+                Grid.Column="0"
+                HorizontalAlignment="Stretch"
+                Background="Gray" />
+
+            <!--  lower right quarter  -->
+            <Grid Grid.Row="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30px" />
+                    <RowDefinition Height="400*" MinHeight="70px" />
+                    <RowDefinition
+                        Height="100*"
+                        MinHeight="60px"
+                        MaxHeight="80px" />
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" TextAlignment="Left">
+                    Item(s) staged for repair or maintenance
+                </TextBlock>
+
+                <DataGrid
+                    Grid.Row="1"
+                    AutoGenerateColumns="False"
+                    IsReadOnly="True"
+                    ItemsSource="{Binding ListOfAvailableArticles}"
+                    SelectedItem="{Binding SelectedAvailableArticle}"
+                    SelectionChanged="AvailableArticleChanged"
+                    SelectionMode="Single">
+
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding Category.Name}" Header="Category" />
+                        <DataGridTextColumn Binding="{Binding Name}" Header="Item Description" />
+                        <DataGridTextColumn Binding="{Binding PricePerDay}" Header="Price Per Day" />
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <!--  button grid (horizontal)  -->
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Button
+                        Name="RemoveArticlesFromStageButton"
+                        Grid.Column="0"
+                        IsEnabled="False">
+                        <TextBlock>Return Articles to Inventory</TextBlock>
+                    </Button>
+                    <Button
+                        Name="CreateRentalButton"
+                        Grid.Column="1"
+                        Background="Cyan"
+                        IsEnabled="False">
+                        <TextBlock>Send Item(s) for Repair or Maintenance</TextBlock>
+                    </Button>
+                </Grid>
+            </Grid>
+
+            <Label
+                Name="NotificationLabel"
+                Grid.Row="3"
+                Content="placeholder"
+                FontSize="14"
+                Foreground="Green"
+                Visibility="Visible" />
+
+        </Grid>
+
+        <Rectangle
+            Grid.Column="2"
+            Height="1px"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Bottom"
+            Fill="Gray" />
+    </Grid>
+
+</Page>

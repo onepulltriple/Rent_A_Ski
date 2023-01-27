@@ -54,6 +54,11 @@ namespace Rent_A_Ski
             MainWindowFrame.Content = new PageShowOutstandingRentals();
         }
 
+        private void MakeAReturn(object sender, RoutedEventArgs e)
+        {
+            MainWindowFrame.Content = new PageMakeAReturn();
+        }
+
         private void AddEditRemoveEmployees(object sender, RoutedEventArgs e)
         {
             MainWindowFrame.Content = new PageAddEditRemoveEmployees();
@@ -63,6 +68,5 @@ namespace Rent_A_Ski
         {
             Environment.Exit(0);
         }
-
     }
 }

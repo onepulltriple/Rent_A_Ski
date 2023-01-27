@@ -125,6 +125,7 @@ namespace Rent_A_Ski.Pages
                     NotificationLabel.Visibility = Visibility.Visible;
 
                     CreateRentalButton.IsEnabled = false;
+                    RemoveArticlesFromStageButton.IsEnabled = false;
                 }
             }
         }

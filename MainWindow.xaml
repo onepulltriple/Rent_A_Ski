@@ -81,7 +81,7 @@
             <Button>
                 <TextBlock>Add/Edit/Remove Customers</TextBlock>
             </Button>
-            <Button>
+            <Button Click="MakeAReturn">
                 <TextBlock>Make a Return</TextBlock>
             </Button>
             <Button Click="AddEditRemoveEmployees" FontStyle="Italic">
