@@ -35,11 +35,7 @@ namespace Rent_A_Ski.Pages
 
         public void InitializeData()
         {
-            Article.RefreshListOfArticles();
-            Customer.RefreshListOfCustomers();
-            Employee.RefreshListOfEmployees();
             Rental.RefreshListOfRentals();
-
             FullListOfRentals = Rental.ListOfRentals;
         }
     }

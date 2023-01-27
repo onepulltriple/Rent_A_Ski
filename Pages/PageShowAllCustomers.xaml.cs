@@ -22,10 +22,7 @@ namespace Rent_A_Ski.Pages
     /// </summary>
     public partial class PageShowAllCustomers : Page
     {
-        public ObservableCollection<Customer> CompleteListOfCustomers
-        {
-            get => Customer.ListOfCustomers;
-        }
+        public ObservableCollection<Customer> CompleteListOfCustomers { get; set; }
 
         public Customer SelectedCustomer { get; set; }
 
@@ -39,6 +36,7 @@ namespace Rent_A_Ski.Pages
         private void InitializeData()
         {
             Customer.RefreshListOfCustomers();
+            CompleteListOfCustomers = Customer.ListOfCustomers;
         }
     }
 }

@@ -35,9 +35,6 @@ namespace Rent_A_Ski.Pages
 
         public void InitializeData()
         {
-            Article.RefreshListOfArticles();
-            Customer.RefreshListOfCustomers();
-            Employee.RefreshListOfEmployees();
             Rental.RefreshListOfRentals();
 
             var tempList = Rental.ListOfRentals.
@@ -47,13 +44,6 @@ namespace Rent_A_Ski.Pages
             {
                 ListOfOutstandingRentals.Add(item);
             }
-
-
-            //ListOfOutstandingRentals = new ObservableCollection<Rental>
-            //    (
-            //        Rental.ListOfRentals.
-            //        Where(x => x.Article.Status.Description == "Rented")
-            //    );
         }
     }
 }
