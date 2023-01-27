@@ -25,6 +25,8 @@ namespace Rent_A_Ski
         public MainWindow()
         {
             InitializeComponent();
+            Category.RefreshListOfCategories();
+            Status.RefreshListOfStatuses();
         }
 
         private void ShowCompleteInventory(object sender, RoutedEventArgs e)

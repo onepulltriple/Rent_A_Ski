@@ -46,8 +46,10 @@ namespace Rent_A_Ski.Models
 
         public static void RefreshListOfArticles()
         {
-            Category.RefreshListOfCategories();
-            Status.RefreshListOfStatuses();
+            // Performed once at program start
+                //Category.RefreshListOfCategories();
+                //Status.RefreshListOfStatuses();
+
             ListOfArticles = new SQLController().GetArticles(); 
         }
     }

@@ -57,8 +57,8 @@
                     IsReadOnly="True"
                     ItemsSource="{Binding ListOfAvailableArticles}"
                     SelectedItem="{Binding SelectedAvailableArticle}"
-                    SelectionMode="Single"
-                    SelectionChanged="AvailableArticleChanged">
+                    SelectionChanged="AvailableArticleChanged"
+                    SelectionMode="Single">
 
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding Category.Name}" Header="Category" />
@@ -122,8 +122,8 @@
                     IsReadOnly="True"
                     ItemsSource="{Binding StagedArticlesList}"
                     SelectedItem="{Binding SelectedStagedArticle}"
-                    SelectionMode="Single"
-                    SelectionChanged="StagedArticleSelectionChanged">
+                    SelectionChanged="StagedArticleSelectionChanged"
+                    SelectionMode="Single">
 
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding Category.Name}" Header="Category" />

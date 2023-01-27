@@ -23,7 +23,7 @@ namespace Rent_A_Ski.Pages
     /// </summary>
     public partial class PageShowCompleteInventory : Page
     {
-        public ObservableCollection<Article> ListOfCompleteInventory { get; set; }
+        public ObservableCollection<Article> CompleteListOfInventory { get; set; }
 
         public Article SelectedArticle { get; set; }
 
@@ -37,7 +37,7 @@ namespace Rent_A_Ski.Pages
         private void InitializeData()
         {
             Article.RefreshListOfArticles();
-            ListOfCompleteInventory = Article.ListOfArticles;
+            CompleteListOfInventory = Article.ListOfArticles;
         }
     }
 }

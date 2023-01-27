@@ -22,7 +22,7 @@ namespace Rent_A_Ski.Pages
     /// </summary>
     public partial class PageAddEditRemoveEmployees : Page
     {
-        public ObservableCollection<Employee> FullListOfEmployees { get; set; }
+        public ObservableCollection<Employee> CompleteListOfEmployees { get; set; }
 
         public Employee SelectedEmployee { get; set; }
 
@@ -36,7 +36,7 @@ namespace Rent_A_Ski.Pages
         public void InitializeData()
         {
             Employee.RefreshListOfEmployees();
-            FullListOfEmployees = Employee.ListOfEmployees;
+            CompleteListOfEmployees = Employee.ListOfEmployees;
         }
     }
 }

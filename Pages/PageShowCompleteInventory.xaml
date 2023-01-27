@@ -20,7 +20,7 @@
             Grid.Row="0"
             AutoGenerateColumns="False"
             IsReadOnly="True"
-            ItemsSource="{Binding ListOfCompleteInventory}"
+            ItemsSource="{Binding CompleteListOfInventory}"
             SelectedItem="{Binding SelectedArticle}"
             SelectionMode="Single">
 
