@@ -210,7 +210,7 @@
                     Grid.Row="1"
                     AutoGenerateColumns="False"
                     IsReadOnly="True"
-                    ItemsSource="{Binding CustomersReservedArticlesList}">
+                    ItemsSource="{Binding ListOfCustomersRentedArticles}">
 
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding Category.Name}" Header="Category" />

@@ -51,7 +51,7 @@
                     Grid.Row="1"
                     AutoGenerateColumns="False"
                     IsReadOnly="True"
-                    ItemsSource="{Binding FullListOfCustomers}"
+                    ItemsSource="{Binding ListOfCustomersWithRentals}"
                     SelectedItem="{Binding SelectedCustomer}"
                     SelectionChanged="CustomerChanged"
                     SelectionMode="Single">
@@ -90,12 +90,14 @@
                     Grid.Row="1"
                     AutoGenerateColumns="False"
                     IsReadOnly="True"
-                    ItemsSource="{Binding CustomersReservedArticlesList}">
+                    ItemsSource="{Binding ListOfCustomersRentedArticles}"
+                    SelectedItem="{Binding ArticleToReturn}"
+                    SelectionChanged="CustomersRentedArticleSelectionChanged">
 
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding Category.Name}" Header="Category" />
                         <DataGridTextColumn Binding="{Binding Name}" Header="Item Description" />
-                        <DataGridTextColumn Binding="{Binding PricePerDay}" Header="Price Per Day" />
+                        <DataGridTextColumn Binding="{Binding Counter}" Header="Counter" />
                     </DataGrid.Columns>
                 </DataGrid>
 
@@ -126,7 +128,7 @@
                         Background="PaleVioletRed"
                         Click="MarkArticleForRepair"
                         IsEnabled="False">
-                        <TextBlock>Mark Article for Repair</TextBlock>
+                        <TextBlock>Mark Item for Repair</TextBlock>
                     </Button>
                 </Grid>
 
@@ -182,7 +184,7 @@
                     Grid.Row="1"
                     AutoGenerateColumns="False"
                     IsReadOnly="True"
-                    ItemsSource="{Binding ArticlesStagedForReturnList}"
+                    ItemsSource="{Binding ListOfArticlesStagedForReturn}"
                     SelectedItem="{Binding SelectedStagedForReturnArticle}"
                     SelectionChanged="ArticleStagedForReturnSelectionChanged"
                     SelectionMode="Single">
@@ -220,9 +222,9 @@
                     Grid.Row="1"
                     AutoGenerateColumns="False"
                     IsReadOnly="True"
-                    ItemsSource="{Binding ListOfAvailableArticles}"
-                    SelectedItem="{Binding SelectedAvailableArticle}"
-                    SelectionChanged="AvailableArticleChanged"
+                    ItemsSource="{Binding ListOfArticlesStagedForRepairOrMaint}"
+                    SelectedItem="{Binding SelectedStagedForRepairOrMaintArticle}"
+                    SelectionChanged="StagedForRepairOrMaintArticleChanged"
                     SelectionMode="Single">
 
                     <DataGrid.Columns>
@@ -242,7 +244,7 @@
                         Name="RemoveArticlesFromStageButton"
                         Grid.Column="0"
                         IsEnabled="False">
-                        <TextBlock>Return Articles to Inventory</TextBlock>
+                        <TextBlock>Return Item(s) to Inventory</TextBlock>
                     </Button>
                     <Button
                         Name="CreateRentalButton"

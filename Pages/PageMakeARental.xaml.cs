@@ -29,7 +29,16 @@ namespace Rent_A_Ski.Pages
 
         public ObservableCollection<Article> StagedArticlesList { get; set; } = new();
 
-        public bool AreAnyArticlesStaged {
+        public ObservableCollection<Article> ListOfCustomersRentedArticles { get; set; } = new();
+
+        public Article SelectedAvailableArticle { get; set; }
+
+        public Article SelectedStagedArticle { get; set; }
+
+        public Customer SelectedCustomer { get; set; }
+
+        public bool AreAnyArticlesStaged 
+        {
             get
             {
                 if (StagedArticlesList.Count > 0)
@@ -39,7 +48,8 @@ namespace Rent_A_Ski.Pages
             }
         }
 
-        public bool IsACustomerSelected {
+        public bool IsACustomerSelected 
+        {
             get
             {
                 if (SelectedCustomer != null)
@@ -48,14 +58,6 @@ namespace Rent_A_Ski.Pages
                     return false;
             }
         }
-
-        public ObservableCollection<Article> CustomersReservedArticlesList { get; set; } = new();
-
-        public Article SelectedAvailableArticle { get; set; }
-
-        public Article SelectedStagedArticle { get; set; }
-
-        public Customer SelectedCustomer { get; set; }
 
         public PageMakeARental()
         {
@@ -66,14 +68,12 @@ namespace Rent_A_Ski.Pages
 
         private void InitializeData()
         {
-            Article.RefreshListOfArticles();
-            Customer.RefreshListOfCustomers();
             Rental.RefreshListOfRentals();
 
             ListOfAvailableArticles = new ObservableCollection<Article>
                 (
                     Article.ListOfArticles.
-                    Where(x => x.Status.Description == "Available")
+                    Where(article => article.Status.Description == "Available")
                 );
 
             FullListOfCustomers = Customer.ListOfCustomers;
@@ -150,7 +150,7 @@ namespace Rent_A_Ski.Pages
 
         private void UpdateCustomersDisplayedArticles()
         {
-            CustomersReservedArticlesList.Clear();
+            ListOfCustomersRentedArticles.Clear();
             
             var tempList = Rental.ListOfRentals.
                 Where(rental => rental.Customer_id == SelectedCustomer.id).
@@ -158,7 +158,7 @@ namespace Rent_A_Ski.Pages
 
             foreach (var item in tempList)
             {
-                CustomersReservedArticlesList.Add(item);
+                ListOfCustomersRentedArticles.Add(item);
             }
 
             NotificationLabel.Visibility = Visibility.Hidden;
