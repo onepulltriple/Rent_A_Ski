@@ -31,8 +31,9 @@
                 <DataGridTextColumn Binding="{Binding Customer.FirstName}" Header="First Name" />
                 <DataGridTextColumn Binding="{Binding Customer.LastName}" Header="Last Name" />
                 <DataGridTextColumn Binding="{Binding DateOfRental}" Header="Rented" />
+                <DataGridTextColumn Binding="{Binding Employee_Outgoing.Username}" Header="Rented by" />
                 <DataGridTextColumn Binding="{Binding DateOfReturn}" Header="Returned" />
-                <DataGridTextColumn Binding="{Binding Employee.Username}" Header="Logged by" />
+                <DataGridTextColumn Binding="{Binding Employee_Incoming.Username}" Header="Returned by" />
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

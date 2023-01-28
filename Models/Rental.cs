@@ -20,7 +20,7 @@ namespace Rent_A_Ski.Models
 
         public string DateOfRental
         {
-            get { return outgoingdate.ToString("yyyy-MM-dd"); }
+            get { return outgoingdate.ToString("yyyy-MM-dd HH:mm"); }
         }
 
         private DateTime? incomingdate;
@@ -32,20 +32,24 @@ namespace Rent_A_Ski.Models
 
         public string? DateOfReturn
         {
-            get { return incomingdate?.ToString("yyyy-MM-dd"); }
+            get { return incomingdate?.ToString("yyyy-MM-dd HH:mm"); }
         }
 
         public int Article_id { get; set; }
 
         public int Customer_id { get; set; }
 
-        public int Employee_id { get; set; }
+        public int Employee_id_outgoing { get; set; }
+
+        public int? Employee_id_incoming { get; set; }
 
         public Article Article { get; set; }
 
         public Customer Customer { get; set; }
 
-        public Employee Employee { get; set; }
+        public Employee Employee_Outgoing { get; set; }
+
+        public Employee? Employee_Incoming { get; set; }
 
         public static ObservableCollection<Rental> ListOfRentals { get; set; }
 
@@ -54,7 +58,7 @@ namespace Rent_A_Ski.Models
             Article.RefreshListOfArticles();
             Customer.RefreshListOfCustomers();
             Employee.RefreshListOfEmployees();
-            ListOfRentals = new SQLController().GetRentals(null);
+            ListOfRentals = new SQLController().GetRentals();
         }
 
     }

@@ -245,14 +245,16 @@
                     <Button
                         Name="ReturnItemsToInventoryButton"
                         Grid.Column="0"
-                        IsEnabled="False">
+                        IsEnabled="False"
+                        Click="ReturnItemsToInventory">
                         <TextBlock>Return Item(s) to Inventory</TextBlock>
                     </Button>
                     <Button
                         Name="SendItemsForRepairOrMaintenanceButton"
                         Grid.Column="1"
                         Background="Cyan"
-                        IsEnabled="False">
+                        IsEnabled="False"
+                        Click="SendItemsForRepairOrMaintenance">
                         <TextBlock>Send Item(s) for Repair or Maintenance</TextBlock>
                     </Button>
                 </Grid>

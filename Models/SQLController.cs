@@ -103,10 +103,10 @@ namespace Rent_A_Ski.Models
                         tempArticle.Category_id = (int)reader["TABLE_CATEGORY_ID"];
 
                         tempArticle.Status =
-                            Status.ListOfStatuses.First(x => x.id == tempArticle.Status_id);
+                            Status.ListOfStatuses.First(status => status.id == tempArticle.Status_id);
 
                         tempArticle.Category =
-                            Category.ListOfCategories.First(x => x.id == tempArticle.Category_id);
+                            Category.ListOfCategories.First(category => category.id == tempArticle.Category_id);
 
                         tempListOfArticles.Add(tempArticle);
                     }
@@ -122,62 +122,7 @@ namespace Rent_A_Ski.Models
 
             return tempListOfArticles;
         }
-
-        public ObservableCollection<Rental> GetRentals(int? customer_id)
-        {
-            ObservableCollection<Rental> tempListOfRentals = new();
-
-            if (customer_id != null)
-                query = $"SELECT * FROM TABLE_RENTALS WHERE TABLE_CUSTOMERS_ID = '{customer_id}'";
-            else
-                query = "SELECT * FROM TABLE_RENTALS";
-
-            command = new(query, connection);
-
-            try
-            {
-                connection.Open();
-                reader = command.ExecuteReader();
-
-                if (reader.HasRows)
-                {
-                    while (reader.Read())
-                    {
-                        Rental tempRental = new();
-                        tempRental.id = (int)reader["id"];
-                        tempRental.OutgoingDate = (DateTime)reader["OutgoingDate"];
-                        if (reader["IncomingDate"] != DBNull.Value)
-                            tempRental.IncomingDate = (DateTime)reader["IncomingDate"];
-                        else
-                            tempRental.IncomingDate = null;
-                        tempRental.Article_id = (int)reader["TABLE_ARTICLES_ID"];
-                        tempRental.Customer_id = (int)reader["TABLE_CUSTOMERS_ID"];
-                        tempRental.Employee_id = (int)reader["TABLE_EMPLOYEES_ID"];
-
-                        tempRental.Article =
-                            Article.ListOfArticles.First(x => x.id == tempRental.Article_id);
-
-                        tempRental.Customer =
-                            Customer.ListOfCustomers.First(x => x.id == tempRental.Customer_id);
-
-                        tempRental.Employee =
-                            Employee.ListOfEmployees.First(x => x.id == tempRental.Employee_id);
-
-                        tempListOfRentals.Add(tempRental);
-                    }
-                }
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show(error.Message);
-                //throw;
-            }
-
-            connection.Close();
-
-            return tempListOfRentals;
-        }
-
+        
         public ObservableCollection<Customer> GetCustomers()
         {
             ObservableCollection<Customer> tempListOfCustomers = new();
@@ -207,7 +152,7 @@ namespace Rent_A_Ski.Models
                         tempCustomer.Employee_id = (int)reader["TABLE_EMPLOYEES_ID"];
 
                         tempCustomer.Employee =
-                            Employee.ListOfEmployees.First(x => x.id == tempCustomer.Employee_id);
+                            Employee.ListOfEmployees.First(employee => employee.id == tempCustomer.Employee_id);
 
                         tempListOfCustomers.Add(tempCustomer);
                     }
@@ -340,6 +285,65 @@ namespace Rent_A_Ski.Models
             return tempListOfStatuses;
         }
 
+        public ObservableCollection<Rental> GetRentals()
+        {
+            ObservableCollection<Rental> tempListOfRentals = new();
+
+            query = "SELECT * FROM TABLE_RENTALS";
+
+            command = new(query, connection);
+
+            try
+            {
+                connection.Open();
+                reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        Rental tempRental = new();
+                        tempRental.id = (int)reader["id"];
+                        tempRental.OutgoingDate = (DateTime)reader["OutgoingDate"];
+                        if (reader["IncomingDate"] != DBNull.Value)
+                            tempRental.IncomingDate = (DateTime)reader["IncomingDate"];
+                        else
+                            tempRental.IncomingDate = null;
+                        tempRental.Article_id = (int)reader["TABLE_ARTICLES_ID"];
+                        tempRental.Customer_id = (int)reader["TABLE_CUSTOMERS_ID"];
+                        tempRental.Employee_id_outgoing = (int)reader["TABLE_EMPLOYEES_ID_OUTG"];
+                        if (reader["TABLE_EMPLOYEES_ID_INC"] != DBNull.Value)
+                            tempRental.Employee_id_incoming = (int)reader["TABLE_EMPLOYEES_ID_INC"];
+                        else
+                            tempRental.Employee_id_incoming = null;
+
+                        tempRental.Article =
+                            Article.ListOfArticles.First(article => article.id == tempRental.Article_id);
+
+                        tempRental.Customer =
+                            Customer.ListOfCustomers.First(customer => customer.id == tempRental.Customer_id);
+
+                        tempRental.Employee_Outgoing =
+                            Employee.ListOfEmployees.First(employee => employee.id == tempRental.Employee_id_outgoing);
+
+                        tempRental.Employee_Incoming =
+                            Employee.ListOfEmployees.FirstOrDefault(employee => employee.id == tempRental.Employee_id_incoming);
+
+                        tempListOfRentals.Add(tempRental);
+                    }
+                }
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show(error.Message);
+                //throw;
+            }
+
+            connection.Close();
+
+            return tempListOfRentals;
+        }
+
         public bool RentArticles(ObservableCollection<Article> articles_list, Customer customer)
         {
             try
@@ -349,8 +353,9 @@ namespace Rent_A_Ski.Models
                 // Add rentals to TABLE_RENTALS
                 query = 
                     "INSERT INTO TABLE_RENTALS " +
-                    "(OutgoingDate, TABLE_ARTICLES_ID, TABLE_CUSTOMERS_ID, TABLE_EMPLOYEES_ID) VALUES " +
-                    "(@outgoing_date, @article_id, @customer_id, @employee_id)";
+                    "(OutgoingDate, TABLE_ARTICLES_ID, TABLE_CUSTOMERS_ID, TABLE_EMPLOYEES_ID_OUTG) " +
+                    "VALUES " +
+                    "(@outgoing_date, @article_id, @customer_id, @employee_id_outg)";
 
                 foreach (Article item in articles_list)
                 {
@@ -358,8 +363,8 @@ namespace Rent_A_Ski.Models
                     command.Parameters.AddWithValue("@outgoing_date", DateTime.Now);
                     command.Parameters.AddWithValue("@article_id", item.id);
                     command.Parameters.AddWithValue("@customer_id", customer.id);
-                    //command.Parameters.AddWithValue("@employee_id", LoginWindow.Credentials.id);
-                    command.Parameters.AddWithValue("@employee_id", 1);
+                    //command.Parameters.AddWithValue("@employee_id_outg", LoginWindow.Credentials.id);
+                    command.Parameters.AddWithValue("@employee_id_outg", 1);
 
                     command.ExecuteNonQuery();
                 }
@@ -375,8 +380,8 @@ namespace Rent_A_Ski.Models
                 {
                     command = new(query, connection);
                     command.Parameters.AddWithValue("@status_id", 
-                        Status.ListOfStatuses.First(x=>x.Description == "Rented").id);
-                    command.Parameters.AddWithValue("@counter", item.Counter++);
+                        Status.ListOfStatuses.First(status => status.Description == "Rented").id);
+                    command.Parameters.AddWithValue("@counter", item.Counter + 1);
                     command.Parameters.AddWithValue("@article_id", item.id);
 
                     command.ExecuteNonQuery();
@@ -395,5 +400,10 @@ namespace Rent_A_Ski.Models
 
             return true;
         }
+
+        //public bool ReturnItemToInventory(ObservableCollection<Article> articles_list)
+        //{
+
+        //}
     }
 }

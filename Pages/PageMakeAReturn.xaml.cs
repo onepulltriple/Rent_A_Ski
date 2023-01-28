@@ -173,5 +173,15 @@ namespace Rent_A_Ski.Pages
             RemoveArticleFromStageButton.IsEnabled = true;
             DataGridForReturn.SelectedItem = null;
         }
+
+        private void ReturnItemsToInventory(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void SendItemsForRepairOrMaintenance(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
