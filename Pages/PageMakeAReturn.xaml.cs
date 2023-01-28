@@ -95,7 +95,9 @@ namespace Rent_A_Ski.Pages
             ListOfCustomersRentedArticles.Clear();
 
             var tempList = Rental.ListOfRentals.
-                Where(rental => rental.Customer_id == SelectedCustomer.id).
+                Where(rental => 
+                    rental.Customer_id == SelectedCustomer.id &&
+                    rental.DateOfReturn == null).
                 Select(rental => rental.Article);
 
             foreach (var item in tempList)
@@ -176,7 +178,27 @@ namespace Rent_A_Ski.Pages
 
         private void ReturnItemsToInventory(object sender, RoutedEventArgs e)
         {
+            if (AreAnyArticlesStagedForReturn)
+            {
+                bool rentals_returned = new SQLController().
+                    ReturnArticlesToInventory(ListOfArticlesStagedForReturn);
 
+                if (rentals_returned)
+                {
+                    Rental.RefreshListOfRentals();
+                    ListOfArticlesStagedForReturn.Clear();
+                    UpdateCustomersDisplayedArticles();
+
+                    // update list of customers, too
+
+                    NotificationLabel.Content =
+                        "Item(s) successfully returned by " +
+                        $"{SelectedCustomer.FirstName} {SelectedCustomer.LastName}.";
+                    NotificationLabel.Visibility = Visibility.Visible;
+
+                    ReturnItemsToInventoryButton.IsEnabled = false;
+                }
+            }
         }
 
         private void SendItemsForRepairOrMaintenance(object sender, RoutedEventArgs e)

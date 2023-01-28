@@ -401,9 +401,58 @@ namespace Rent_A_Ski.Models
             return true;
         }
 
-        //public bool ReturnItemToInventory(ObservableCollection<Article> articles_list)
-        //{
+        public bool ReturnArticlesToInventory(ObservableCollection<Article> articles_list)
+        {
+            try
+            {
+                connection.Open();
 
-        //}
+                // Close out rentals in TABLE_RENTALS
+                query =
+                    "UPDATE TABLE_RENTALS SET " +
+                    "IncomingDate = @incoming_date, " +
+                    "TABLE_EMPLOYEES_ID_INC = @employee_id_inc " +
+                    "WHERE TABLE_ARTICLES_ID = @article_id AND IncomingDate IS NULL";
+
+                foreach (Article item in articles_list)
+                {
+                    command = new(query, connection);
+                    command.Parameters.AddWithValue("@incoming_date", DateTime.Now);
+                    //command.Parameters.AddWithValue("@employee_id_inc", LoginWindow.Credentials.id);
+                    command.Parameters.AddWithValue("@employee_id_inc", 1);
+                    command.Parameters.AddWithValue("@article_id", item.id);
+
+                    command.ExecuteNonQuery();
+                }
+
+                // Change status and of affected articles in TABLE_ARTICLES
+                query =
+                    "UPDATE TABLE_ARTICLES SET " +
+                    "TABLE_STATUS_ID = @status_id " +
+                    "WHERE id = @article_id";
+
+                foreach (Article item in articles_list)
+                {
+                    command = new(query, connection);
+                    command.Parameters.AddWithValue("@status_id",
+                        Status.ListOfStatuses.First(status => status.Description == "Available").id);
+                    command.Parameters.AddWithValue("@article_id", item.id);
+
+                    command.ExecuteNonQuery();
+                }
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show(error.Message);
+                return false;
+                //throw;
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            return true;
+        }
     }
 }

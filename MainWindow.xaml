@@ -37,25 +37,17 @@
                 MaxHeight="90px" />
         </Grid.RowDefinitions>
 
+        
         <Frame
             Name="MainWindowFrame"
             Grid.Row="0"
             NavigationUIVisibility="Hidden" />
 
-        <!--<GridSplitter
-            Grid.Row="1"
-            HorizontalAlignment="Stretch"
-            Background="Gray" />-->
-
-        <!--<Separator
-            Grid.Row="1"
-            Background="Blue"
-            BorderThickness="10px"/>-->
-
         <Rectangle Grid.Row="1"
                    HorizontalAlignment="Stretch"
                    Fill="Gray"/>
 
+        <!--upper row-->
         <UniformGrid Grid.Row="2" Rows="1">
             <Button Click="ShowCompleteInventory">
                 <TextBlock>Show Complete Inventory</TextBlock>
@@ -74,6 +66,7 @@
             </Button>
         </UniformGrid>
 
+        <!--lower row-->
         <UniformGrid Grid.Row="3" Rows="1">
             <Button>
                 <TextBlock>Add/Edit/Remove Inventory</TextBlock>
