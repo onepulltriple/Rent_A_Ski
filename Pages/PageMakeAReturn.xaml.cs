@@ -22,13 +22,13 @@ namespace Rent_A_Ski.Pages
     /// </summary>
     public partial class PageMakeAReturn : Page
     {
-        public ObservableCollection<Customer> ListOfCustomersWithRentals { get; set; }
+        public ObservableCollection<Customer> ListOfCustomersWithRentals { get; set; } = new();
 
         public ObservableCollection<Article> ListOfCustomersRentedArticles { get; set; } = new();
 
-        public ObservableCollection<Article> ListOfArticlesStagedForReturn { get; set; }
+        public ObservableCollection<Article> ListOfArticlesStagedForReturn { get; set; } = new();
 
-        public ObservableCollection<Article> ListOfArticlesStagedForRepairOrMaint { get; set; }
+        public ObservableCollection<Article> ListOfArticlesStagedForRepairOrMaint { get; set; } = new();
 
         public Customer SelectedCustomer { get; set; }
 
@@ -84,6 +84,10 @@ namespace Rent_A_Ski.Pages
         private void CustomerChanged(object sender, SelectionChangedEventArgs e)
         {
             UpdateCustomersDisplayedArticles();
+            StageArticleForReturnButton.IsEnabled = false;
+            RemoveArticleFromStageButton.IsEnabled = false;
+            MarkArticleForRepairButton.IsEnabled = false;
+            NotificationLabel.Visibility = Visibility.Hidden;
         }
 
         private void UpdateCustomersDisplayedArticles()
@@ -104,32 +108,70 @@ namespace Rent_A_Ski.Pages
 
         private void CustomersRentedArticleSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            StageArticleForReturnButton.IsEnabled = true;
+            MarkArticleForRepairButton.IsEnabled = true;
+            RemoveArticleFromStageButton.IsEnabled = false;
         }
 
         private void StageArticleForReturn(object sender, RoutedEventArgs e)
         {
+            if (ArticleToReturn != null)
+            {
+                ListOfArticlesStagedForReturn.Add(ArticleToReturn);
+                ListOfCustomersRentedArticles.Remove(ArticleToReturn);
+            }
 
-        }
-
-        private void RemoveArticleFromStage(object sender, RoutedEventArgs e)
-        {
-
+            StageArticleForReturnButton.IsEnabled = false;
+            MarkArticleForRepairButton.IsEnabled = false;
+            ReturnItemsToInventoryButton.IsEnabled = true;
         }
 
         private void MarkArticleForRepair(object sender, RoutedEventArgs e)
         {
+            if (ArticleToReturn != null)
+            {
+                ListOfArticlesStagedForRepairOrMaint.Add(ArticleToReturn);
+                ListOfCustomersRentedArticles.Remove(ArticleToReturn);
+            }
 
+            StageArticleForReturnButton.IsEnabled = false;
+            MarkArticleForRepairButton.IsEnabled = false;
+            SendItemsForRepairOrMaintenanceButton.IsEnabled = true;
+        }
+
+        private void RemoveArticleFromStage(object sender, RoutedEventArgs e)
+        {
+            if (SelectedStagedForReturnArticle != null)
+            {
+                ListOfCustomersRentedArticles.Add(SelectedStagedForReturnArticle);
+                ListOfArticlesStagedForReturn.Remove(SelectedStagedForReturnArticle);
+
+                if (!AreAnyArticlesStagedForReturn)
+                    ReturnItemsToInventoryButton.IsEnabled = false;
+            }
+
+            if (SelectedStagedForRepairOrMaintArticle != null)
+            {
+                ListOfCustomersRentedArticles.Add(SelectedStagedForRepairOrMaintArticle);
+                ListOfArticlesStagedForRepairOrMaint.Remove(SelectedStagedForRepairOrMaintArticle);
+
+                if (!AreAnyArticlesStagedForRepairOrMaint)
+                    SendItemsForRepairOrMaintenanceButton.IsEnabled = false;
+            }
+
+            RemoveArticleFromStageButton.IsEnabled = false;
         }
 
         private void ArticleStagedForReturnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            RemoveArticleFromStageButton.IsEnabled = true;
+            DataGridForRepairOrMaint.SelectedItem = null;
         }
 
-        private void StagedForRepairOrMaintArticleChanged(object sender, SelectionChangedEventArgs e)
+        private void ArticleStagedForRepairOrMaintChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            RemoveArticleFromStageButton.IsEnabled = true;
+            DataGridForReturn.SelectedItem = null;
         }
     }
 }

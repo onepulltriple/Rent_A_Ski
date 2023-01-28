@@ -116,19 +116,19 @@
                         <TextBlock>Stage Item for Return</TextBlock>
                     </Button>
                     <Button
-                        Name="RemoveArticleFromStageButton"
-                        Grid.Column="1"
-                        Click="RemoveArticleFromStage"
-                        IsEnabled="False">
-                        <TextBlock>Remove Item from Stage</TextBlock>
-                    </Button>
-                    <Button
                         Name="MarkArticleForRepairButton"
-                        Grid.Column="2"
+                        Grid.Column="1"
                         Background="PaleVioletRed"
                         Click="MarkArticleForRepair"
                         IsEnabled="False">
                         <TextBlock>Mark Item for Repair</TextBlock>
+                    </Button>
+                    <Button
+                        Name="RemoveArticleFromStageButton"
+                        Grid.Column="2"
+                        Click="RemoveArticleFromStage"
+                        IsEnabled="False">
+                        <TextBlock>Remove Item from Stage</TextBlock>
                     </Button>
                 </Grid>
 
@@ -181,6 +181,7 @@
                 </TextBlock>
 
                 <DataGrid
+                    x:Name="DataGridForReturn"
                     Grid.Row="1"
                     AutoGenerateColumns="False"
                     IsReadOnly="True"
@@ -219,12 +220,13 @@
                 </TextBlock>
 
                 <DataGrid
+                    x:Name="DataGridForRepairOrMaint"
                     Grid.Row="1"
                     AutoGenerateColumns="False"
                     IsReadOnly="True"
                     ItemsSource="{Binding ListOfArticlesStagedForRepairOrMaint}"
                     SelectedItem="{Binding SelectedStagedForRepairOrMaintArticle}"
-                    SelectionChanged="StagedForRepairOrMaintArticleChanged"
+                    SelectionChanged="ArticleStagedForRepairOrMaintChanged"
                     SelectionMode="Single">
 
                     <DataGrid.Columns>
@@ -241,13 +243,13 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <Button
-                        Name="RemoveArticlesFromStageButton"
+                        Name="ReturnItemsToInventoryButton"
                         Grid.Column="0"
                         IsEnabled="False">
                         <TextBlock>Return Item(s) to Inventory</TextBlock>
                     </Button>
                     <Button
-                        Name="CreateRentalButton"
+                        Name="SendItemsForRepairOrMaintenanceButton"
                         Grid.Column="1"
                         Background="Cyan"
                         IsEnabled="False">
