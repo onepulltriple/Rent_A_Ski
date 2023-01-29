@@ -258,14 +258,6 @@
                         IsEnabled="False">
                         <TextBlock>Return Item(s) to Inventory</TextBlock>
                     </Button>
-                    <!--<Button
-                        Name="SendItemsForRepairOrMaintenanceButton"
-                        Grid.Column="1"
-                        Background="Cyan"
-                        Click="SendItemsForRepairOrMaintenance"
-                        IsEnabled="False">
-                        <TextBlock>Send Item(s) for Repair or Maintenance</TextBlock>
-                    </Button>-->
                 </Grid>
             </Grid>
 
@@ -285,6 +277,6 @@
             HorizontalAlignment="Stretch"
             VerticalAlignment="Bottom"
             Fill="Gray" />
+        
     </Grid>
-
 </Page>

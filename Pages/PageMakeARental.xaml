@@ -89,12 +89,10 @@
                         <TextBlock>Remove Item from Stage</TextBlock>
                     </Button>
                     <Button
-                        Name="CreateRentalButton"
+                        Name="PlaceholderButton"
                         Grid.Column="2"
-                        Background="Cyan"
-                        Click="CreateRental"
                         IsEnabled="False">
-                        <TextBlock>Rent Item(s) to Customer</TextBlock>
+                        <TextBlock>Placeholder</TextBlock>
                     </Button>
                 </Grid>
             </Grid>
@@ -153,7 +151,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="430*" MinHeight="100px" />
                 <RowDefinition Height="6px" />
-                <RowDefinition Height="430*" MinHeight="100px" />
+                <RowDefinition Height="430*" MinHeight="160px" />
                 <RowDefinition
                     Height="32*"
                     MinHeight="32px"
@@ -200,6 +198,10 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="30px" />
                     <RowDefinition Height="400*" MinHeight="70px" />
+                    <RowDefinition
+                        Height="100*"
+                        MinHeight="60px"
+                        MaxHeight="80px" />
                 </Grid.RowDefinitions>
 
                 <TextBlock Grid.Row="0" TextAlignment="Left">
@@ -218,6 +220,28 @@
                         <DataGridTextColumn Binding="{Binding PricePerDay}" Header="Price Per Day" />
                     </DataGrid.Columns>
                 </DataGrid>
+
+                <!--  button grid (horizontal)  -->
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Button
+                        Name="ProceedToPaymentScreenButton"
+                        Grid.Column="0"
+                        IsEnabled="False">
+                        <TextBlock>Proceed to Payment Screen</TextBlock>
+                    </Button>
+                    <Button
+                        Name="CreateRentalButton"
+                        Grid.Column="2"
+                        Background="Cyan"
+                        Click="CreateRental"
+                        IsEnabled="False">
+                        <TextBlock>Rent Item(s) to Customer</TextBlock>
+                    </Button>
+                </Grid>
             </Grid>
 
             <Label
@@ -227,6 +251,7 @@
                 FontSize="14"
                 Foreground="Green"
                 Visibility="Hidden" />
+
         </Grid>
 
         <Rectangle
@@ -235,5 +260,6 @@
             HorizontalAlignment="Stretch"
             VerticalAlignment="Bottom"
             Fill="Gray" />
+
     </Grid>
 </Page>
