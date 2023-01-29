@@ -111,6 +111,7 @@
                     <Button
                         Name="StageArticleForReturnButton"
                         Grid.Column="0"
+                        Background="LightGreen"
                         Click="StageArticleForReturn"
                         IsEnabled="False">
                         <TextBlock>Stage Item for Return</TextBlock>
@@ -161,7 +162,9 @@
         <!--  third column  -->
         <Grid Grid.Row="0" Grid.Column="2">
             <Grid.RowDefinitions>
-                <RowDefinition Height="430*" MinHeight="100px" />
+                <RowDefinition Height="360*" MinHeight="100px" />
+                <RowDefinition Height="6px" />
+                <RowDefinition Height="360*" MinHeight="100px" />
                 <RowDefinition Height="6px" />
                 <RowDefinition Height="430*" MinHeight="160px" />
                 <RowDefinition
@@ -170,7 +173,7 @@
                     MaxHeight="80px" />
             </Grid.RowDefinitions>
 
-            <!--  upper right quarter  -->
+            <!--  upper right third  -->
             <Grid Grid.Row="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="30px" />
@@ -205,8 +208,43 @@
                 HorizontalAlignment="Stretch"
                 Background="Gray" />
 
-            <!--  lower right quarter  -->
+            <!--  middle right third  -->
             <Grid Grid.Row="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30px" />
+                    <RowDefinition Height="400*" MinHeight="70px" />
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" TextAlignment="Left">
+                    Item(s) staged for maintenance
+                </TextBlock>
+
+                <DataGrid
+                    x:Name="DataGridForMaintenance"
+                    Grid.Row="1"
+                    AutoGenerateColumns="False"
+                    IsReadOnly="True"
+                    ItemsSource="{Binding ListOfArticlesStagedForMaintenance}"
+                    SelectedItem="{Binding SelectedStagedForMaintenanceArticle}"
+                    SelectionChanged="ArticleStagedForMaintenanceSelectionChanged"
+                    SelectionMode="Single">
+
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding Category.Name}" Header="Category" />
+                        <DataGridTextColumn Binding="{Binding Name}" Header="Item Description" />
+                        <DataGridTextColumn Binding="{Binding PricePerDay}" Header="Price Per Day" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+
+            <GridSplitter
+                Grid.Row="3"
+                Grid.Column="0"
+                HorizontalAlignment="Stretch"
+                Background="Gray" />
+
+            <!--  lower right third  -->
+            <Grid Grid.Row="4">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="30px" />
                     <RowDefinition Height="400*" MinHeight="70px" />
@@ -217,17 +255,17 @@
                 </Grid.RowDefinitions>
 
                 <TextBlock Grid.Row="0" TextAlignment="Left">
-                    Item(s) staged for repair or maintenance
+                    Item(s) staged for repair
                 </TextBlock>
 
                 <DataGrid
-                    x:Name="DataGridForRepairOrMaint"
+                    x:Name="DataGridForRepair"
                     Grid.Row="1"
                     AutoGenerateColumns="False"
                     IsReadOnly="True"
-                    ItemsSource="{Binding ListOfArticlesStagedForRepairOrMaint}"
-                    SelectedItem="{Binding SelectedStagedForRepairOrMaintArticle}"
-                    SelectionChanged="ArticleStagedForRepairOrMaintChanged"
+                    ItemsSource="{Binding ListOfArticlesStagedForRepair}"
+                    SelectedItem="{Binding SelectedStagedForRepairArticle}"
+                    SelectionChanged="ArticleStagedForRepairChanged"
                     SelectionMode="Single">
 
                     <DataGrid.Columns>
@@ -253,8 +291,8 @@
                     <Button
                         Name="ReturnItemsToInventoryButton"
                         Grid.Column="1"
-                        Background="LightGreen"
-                        Click="ReturnItemsAsAvailable"
+                        Background="Cyan"
+                        Click="ReturnItemsToInventory"
                         IsEnabled="False">
                         <TextBlock>Return Item(s) to Inventory</TextBlock>
                     </Button>
@@ -263,11 +301,11 @@
 
             <Label
                 Name="NotificationLabel"
-                Grid.Row="3"
-                Content="placeholder"
+                Grid.Row="5"
+                Content=""
                 FontSize="14"
                 Foreground="Green"
-                Visibility="Visible" />
+                Visibility="Hidden" />
 
         </Grid>
 
@@ -277,6 +315,6 @@
             HorizontalAlignment="Stretch"
             VerticalAlignment="Bottom"
             Fill="Gray" />
-        
+
     </Grid>
 </Page>

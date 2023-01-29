@@ -28,7 +28,9 @@ namespace Rent_A_Ski.Pages
 
         public ObservableCollection<Article> ListOfArticlesStagedForReturn { get; set; } = new();
 
-        public ObservableCollection<Article> ListOfArticlesStagedForRepairOrMaint { get; set; } = new();
+        public ObservableCollection<Article> ListOfArticlesStagedForMaintenance { get; set; } = new();
+
+        public ObservableCollection<Article> ListOfArticlesStagedForRepair { get; set; } = new();
 
         public Customer SelectedCustomer { get; set; }
 
@@ -36,7 +38,9 @@ namespace Rent_A_Ski.Pages
 
         public Article SelectedStagedForReturnArticle { get; set; }
 
-        public Article SelectedStagedForRepairOrMaintArticle { get; set; }
+        public Article SelectedStagedForMaintenanceArticle { get; set; }
+
+        public Article SelectedStagedForRepairArticle { get; set; }
 
         public bool AreAnyArticlesStagedForReturn 
         {
@@ -49,11 +53,22 @@ namespace Rent_A_Ski.Pages
             }
         }
 
-        public bool AreAnyArticlesStagedForRepairOrMaint 
+        public bool AreAnyArticlesStagedForMaintenance
         {
             get
             {
-                if (ListOfArticlesStagedForRepairOrMaint.Count > 0)
+                if (ListOfArticlesStagedForMaintenance.Count > 0)
+                    return true;
+                else
+                    return false;
+            }
+        }
+
+        public bool AreAnyArticlesStagedForRepair 
+        {
+            get
+            {
+                if (ListOfArticlesStagedForRepair.Count > 0)
                     return true;
                 else
                     return false;
@@ -84,8 +99,9 @@ namespace Rent_A_Ski.Pages
         {
             UpdateCustomersDisplayedArticles();
             StageArticleForReturnButton.IsEnabled = false;
-            RemoveArticleFromStageButton.IsEnabled = false;
+            MarkArticleForMaintenanceButton.IsEnabled = false;
             MarkArticleForRepairButton.IsEnabled = false;
+            RemoveArticleFromStageButton.IsEnabled = false;
             NotificationLabel.Visibility = Visibility.Hidden;
         }
 
@@ -102,7 +118,8 @@ namespace Rent_A_Ski.Pages
             foreach (var item in tempList)
             {
                 if (!ListOfArticlesStagedForReturn.Contains(item) &&
-                    !ListOfArticlesStagedForRepairOrMaint.Contains(item))
+                    !ListOfArticlesStagedForMaintenance.Contains(item) &&
+                    !ListOfArticlesStagedForRepair.Contains(item))
                         ListOfCustomersRentedArticles.Add(item);
             }
 
@@ -112,6 +129,7 @@ namespace Rent_A_Ski.Pages
         private void CustomersRentedArticleSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             StageArticleForReturnButton.IsEnabled = true;
+            MarkArticleForMaintenanceButton.IsEnabled = true;
             MarkArticleForRepairButton.IsEnabled = true;
             RemoveArticleFromStageButton.IsEnabled = false;
         }
@@ -120,27 +138,49 @@ namespace Rent_A_Ski.Pages
         {
             if (ArticleToReturn != null)
             {
+                if (ArticleToReturn.Counter >= ArticleToReturn.MaintenanceInterval)
+                {
+                    ListOfArticlesStagedForMaintenance.Add(ArticleToReturn);
+                    ListOfCustomersRentedArticles.Remove(ArticleToReturn);
+                }
+                else
+                {
+                    ListOfArticlesStagedForReturn.Add(ArticleToReturn);
+                    ListOfCustomersRentedArticles.Remove(ArticleToReturn);
+                }
+            }
 
-                ListOfArticlesStagedForReturn.Add(ArticleToReturn);
+            ButtonState01();
+        }
+
+        private void MarkArticleForMaintenance(object sender, RoutedEventArgs e)
+        {
+            if (ArticleToReturn != null)
+            {
+                ListOfArticlesStagedForMaintenance.Add(ArticleToReturn);
                 ListOfCustomersRentedArticles.Remove(ArticleToReturn);
             }
 
-            StageArticleForReturnButton.IsEnabled = false;
-            MarkArticleForRepairButton.IsEnabled = false;
-            ReturnItemsToInventoryButton.IsEnabled = true;
+            ButtonState01();
         }
 
         private void MarkArticleForRepair(object sender, RoutedEventArgs e)
         {
             if (ArticleToReturn != null)
             {
-                ListOfArticlesStagedForRepairOrMaint.Add(ArticleToReturn);
+                ListOfArticlesStagedForRepair.Add(ArticleToReturn);
                 ListOfCustomersRentedArticles.Remove(ArticleToReturn);
             }
 
+            ButtonState01();
+        }
+
+        private void ButtonState01()
+        {
             StageArticleForReturnButton.IsEnabled = false;
+            MarkArticleForMaintenanceButton.IsEnabled = false;
             MarkArticleForRepairButton.IsEnabled = false;
-            //SendItemsForRepairOrMaintenanceButton.IsEnabled = true;
+            ReturnItemsToInventoryButton.IsEnabled = true;
         }
 
         private void RemoveArticleFromStage(object sender, RoutedEventArgs e)
@@ -154,13 +194,22 @@ namespace Rent_A_Ski.Pages
                     ReturnItemsToInventoryButton.IsEnabled = false;
             }
 
-            if (SelectedStagedForRepairOrMaintArticle != null)
+            if (SelectedStagedForMaintenanceArticle != null)
             {
-                ListOfCustomersRentedArticles.Add(SelectedStagedForRepairOrMaintArticle);
-                ListOfArticlesStagedForRepairOrMaint.Remove(SelectedStagedForRepairOrMaintArticle);
+                ListOfCustomersRentedArticles.Add(SelectedStagedForMaintenanceArticle);
+                ListOfArticlesStagedForMaintenance.Remove(SelectedStagedForMaintenanceArticle);
 
-                //if (!AreAnyArticlesStagedForRepairOrMaint)
-                    //SendItemsForRepairOrMaintenanceButton.IsEnabled = false;
+                if (!AreAnyArticlesStagedForMaintenance)
+                    ReturnItemsToInventoryButton.IsEnabled = false;
+            }
+
+            if (SelectedStagedForRepairArticle != null)
+            {
+                ListOfCustomersRentedArticles.Add(SelectedStagedForRepairArticle);
+                ListOfArticlesStagedForRepair.Remove(SelectedStagedForRepairArticle);
+
+                if (!AreAnyArticlesStagedForRepair)
+                    ReturnItemsToInventoryButton.IsEnabled = false;
             }
 
             RemoveArticleFromStageButton.IsEnabled = false;
@@ -169,58 +218,74 @@ namespace Rent_A_Ski.Pages
         private void ArticleStagedForReturnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             RemoveArticleFromStageButton.IsEnabled = true;
-            DataGridForRepairOrMaint.SelectedItem = null;
-            NotificationLabel.Visibility = Visibility.Hidden;
+            DataGridForMaintenance.SelectedItem = null;
+            DataGridForRepair.SelectedItem = null;
+            NotificationLabel.Visibility = Visibility.Hidden; 
         }
 
-        private void ArticleStagedForRepairOrMaintChanged(object sender, SelectionChangedEventArgs e)
+        private void ArticleStagedForMaintenanceSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             RemoveArticleFromStageButton.IsEnabled = true;
             DataGridForReturn.SelectedItem = null;
+            DataGridForRepair.SelectedItem = null;
             NotificationLabel.Visibility = Visibility.Hidden;
         }
 
-        private void ReturnItemsToInventory(int status_id)
+        private void ArticleStagedForRepairChanged(object sender, SelectionChangedEventArgs e)
         {
+            RemoveArticleFromStageButton.IsEnabled = true;
+            DataGridForReturn.SelectedItem = null;
+            DataGridForMaintenance.SelectedItem = null;
+            NotificationLabel.Visibility = Visibility.Hidden;
+        }
+
+        private void ReturnItemsToInventory(object sender, RoutedEventArgs e)
+        {
+            int status_id = 0;
+            bool rentals_returned = false;
+            bool rentals_to_maintain = false;
+            bool rentals_to_repair = false;
+
             if (AreAnyArticlesStagedForReturn)
-                // problem (multiple staged areas)
             {
-                bool rentals_returned = new SQLController().
-                    ReturnArticlesToInventory(ListOfArticlesStagedForReturn, status_id);
+                status_id = Status.ListOfStatuses.
+                    First(status => status.Description == "Available").id;
 
-                if (rentals_returned)
-                {
-                    Rental.RefreshListOfRentals();
-                    ListOfArticlesStagedForReturn.Clear();
-
-                    NotificationLabel.Content =
-                        "Item(s) successfully returned by " +
-                        $"{SelectedCustomer.FirstName} {SelectedCustomer.LastName}.";
-                    NotificationLabel.Visibility = Visibility.Visible;
-
-                    ReturnItemsToInventoryButton.IsEnabled = false;
-                }
+                rentals_returned = new SQLController().
+                  ReturnArticlesToInventory(ListOfArticlesStagedForReturn, status_id);
             }
-        }
 
-        private void SendItemsForRepairOrMaintenance(object sender, RoutedEventArgs e)
-        {
-            ReturnItemsToInventory(Status.ListOfStatuses.
-                First(status => status.Description == "Maintenance required").id);
+            if (AreAnyArticlesStagedForMaintenance)
+            {
+                status_id = Status.ListOfStatuses.
+                    First(status => status.Description == "Maintenance required").id;
 
-            ReturnItemsToInventory(Status.ListOfStatuses.
-                First(status => status.Description == "Repair required").id);
-        }
+                rentals_to_maintain = new SQLController().
+                    ReturnArticlesToInventory(ListOfArticlesStagedForMaintenance, status_id);
+            }
 
-        private void ReturnItemsAsAvailable(object sender, RoutedEventArgs e)
-        {
-            ReturnItemsToInventory(Status.ListOfStatuses.
-                First(status => status.Description == "Available").id);
-        }
+            if (AreAnyArticlesStagedForRepair)
+            {
+                status_id = Status.ListOfStatuses.
+                    First(status => status.Description == "Repair required").id;
 
-        private void MarkArticleForMaintenance(object sender, RoutedEventArgs e)
-        {
-            ;
+                rentals_to_repair = new SQLController().
+                    ReturnArticlesToInventory(ListOfArticlesStagedForRepair, status_id);
+            }
+
+            if (rentals_returned || rentals_to_maintain || rentals_to_repair)
+            {
+                Rental.RefreshListOfRentals();
+                ListOfArticlesStagedForReturn.Clear();
+                ListOfArticlesStagedForMaintenance.Clear();
+                ListOfArticlesStagedForRepair.Clear();
+
+                NotificationLabel.Content =
+                    "Item(s) successfully returned to inventory.";
+                NotificationLabel.Visibility = Visibility.Visible;
+
+                ReturnItemsToInventoryButton.IsEnabled = false;
+            }
         }
     }
 }

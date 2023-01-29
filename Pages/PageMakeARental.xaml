@@ -31,7 +31,7 @@
         <!--  first column  -->
         <Grid Grid.Row="0" Grid.Column="0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="430*" MinHeight="160px" />
+                <RowDefinition Height="480*" MinHeight="160px" />
                 <RowDefinition Height="6px" />
                 <RowDefinition Height="430*" MinHeight="100px" />
             </Grid.RowDefinitions>
@@ -151,7 +151,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="430*" MinHeight="100px" />
                 <RowDefinition Height="6px" />
-                <RowDefinition Height="430*" MinHeight="160px" />
+                <RowDefinition Height="460*" MinHeight="160px" />
                 <RowDefinition
                     Height="32*"
                     MinHeight="32px"
