@@ -401,7 +401,7 @@ namespace Rent_A_Ski.Models
             return true;
         }
 
-        public bool ReturnArticlesToInventory(ObservableCollection<Article> articles_list)
+        public bool ReturnArticlesToInventory(ObservableCollection<Article> articles_list, int newStatus)
         {
             try
             {
@@ -434,8 +434,7 @@ namespace Rent_A_Ski.Models
                 foreach (Article item in articles_list)
                 {
                     command = new(query, connection);
-                    command.Parameters.AddWithValue("@status_id",
-                        Status.ListOfStatuses.First(status => status.Description == "Available").id);
+                    command.Parameters.AddWithValue("@status_id", newStatus);
                     command.Parameters.AddWithValue("@article_id", item.id);
 
                     command.ExecuteNonQuery();
@@ -454,5 +453,6 @@ namespace Rent_A_Ski.Models
 
             return true;
         }
+
     }
 }

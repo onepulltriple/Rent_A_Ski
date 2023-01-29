@@ -116,19 +116,20 @@
                         <TextBlock>Stage Item for Return</TextBlock>
                     </Button>
                     <Button
-                        Name="MarkArticleForRepairButton"
+                        Name="MarkArticleForMaintenanceButton"
                         Grid.Column="1"
+                        Background="LightYellow"
+                        Click="MarkArticleForMaintenance"
+                        IsEnabled="False">
+                        <TextBlock>Stage Item for Maintenance</TextBlock>
+                    </Button>
+                    <Button
+                        Name="MarkArticleForRepairButton"
+                        Grid.Column="2"
                         Background="PaleVioletRed"
                         Click="MarkArticleForRepair"
                         IsEnabled="False">
-                        <TextBlock>Mark Item for Repair</TextBlock>
-                    </Button>
-                    <Button
-                        Name="RemoveArticleFromStageButton"
-                        Grid.Column="2"
-                        Click="RemoveArticleFromStage"
-                        IsEnabled="False">
-                        <TextBlock>Remove Item from Stage</TextBlock>
+                        <TextBlock>Stage Item for Repair</TextBlock>
                     </Button>
                 </Grid>
 
@@ -243,20 +244,28 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <Button
-                        Name="ReturnItemsToInventoryButton"
+                        Name="RemoveArticleFromStageButton"
                         Grid.Column="0"
-                        IsEnabled="False"
-                        Click="ReturnItemsToInventory">
-                        <TextBlock>Return Item(s) to Inventory</TextBlock>
+                        Click="RemoveArticleFromStage"
+                        IsEnabled="False">
+                        <TextBlock>Remove Item from Stage</TextBlock>
                     </Button>
                     <Button
+                        Name="ReturnItemsToInventoryButton"
+                        Grid.Column="1"
+                        Background="LightGreen"
+                        Click="ReturnItemsAsAvailable"
+                        IsEnabled="False">
+                        <TextBlock>Return Item(s) to Inventory</TextBlock>
+                    </Button>
+                    <!--<Button
                         Name="SendItemsForRepairOrMaintenanceButton"
                         Grid.Column="1"
                         Background="Cyan"
-                        IsEnabled="False"
-                        Click="SendItemsForRepairOrMaintenance">
+                        Click="SendItemsForRepairOrMaintenance"
+                        IsEnabled="False">
                         <TextBlock>Send Item(s) for Repair or Maintenance</TextBlock>
-                    </Button>
+                    </Button>-->
                 </Grid>
             </Grid>
 

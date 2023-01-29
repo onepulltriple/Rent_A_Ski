@@ -153,7 +153,9 @@ namespace Rent_A_Ski.Pages
             ListOfCustomersRentedArticles.Clear();
             
             var tempList = Rental.ListOfRentals.
-                Where(rental => rental.Customer_id == SelectedCustomer.id).
+                Where(rental => 
+                    rental.Customer_id == SelectedCustomer.id &&
+                    rental.DateOfReturn == null).
                 Select(rental => rental.Article);
 
             foreach (var item in tempList)

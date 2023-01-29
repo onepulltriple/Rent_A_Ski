@@ -78,7 +78,6 @@ namespace Rent_A_Ski.Pages
                     Select(rental => rental.Customer).
                     Distinct()
                 );
-
         }
 
         private void CustomerChanged(object sender, SelectionChangedEventArgs e)
@@ -102,7 +101,9 @@ namespace Rent_A_Ski.Pages
 
             foreach (var item in tempList)
             {
-                ListOfCustomersRentedArticles.Add(item);
+                if (!ListOfArticlesStagedForReturn.Contains(item) &&
+                    !ListOfArticlesStagedForRepairOrMaint.Contains(item))
+                        ListOfCustomersRentedArticles.Add(item);
             }
 
             NotificationLabel.Visibility = Visibility.Hidden;
@@ -119,6 +120,7 @@ namespace Rent_A_Ski.Pages
         {
             if (ArticleToReturn != null)
             {
+
                 ListOfArticlesStagedForReturn.Add(ArticleToReturn);
                 ListOfCustomersRentedArticles.Remove(ArticleToReturn);
             }
@@ -138,7 +140,7 @@ namespace Rent_A_Ski.Pages
 
             StageArticleForReturnButton.IsEnabled = false;
             MarkArticleForRepairButton.IsEnabled = false;
-            SendItemsForRepairOrMaintenanceButton.IsEnabled = true;
+            //SendItemsForRepairOrMaintenanceButton.IsEnabled = true;
         }
 
         private void RemoveArticleFromStage(object sender, RoutedEventArgs e)
@@ -157,8 +159,8 @@ namespace Rent_A_Ski.Pages
                 ListOfCustomersRentedArticles.Add(SelectedStagedForRepairOrMaintArticle);
                 ListOfArticlesStagedForRepairOrMaint.Remove(SelectedStagedForRepairOrMaintArticle);
 
-                if (!AreAnyArticlesStagedForRepairOrMaint)
-                    SendItemsForRepairOrMaintenanceButton.IsEnabled = false;
+                //if (!AreAnyArticlesStagedForRepairOrMaint)
+                    //SendItemsForRepairOrMaintenanceButton.IsEnabled = false;
             }
 
             RemoveArticleFromStageButton.IsEnabled = false;
@@ -168,28 +170,28 @@ namespace Rent_A_Ski.Pages
         {
             RemoveArticleFromStageButton.IsEnabled = true;
             DataGridForRepairOrMaint.SelectedItem = null;
+            NotificationLabel.Visibility = Visibility.Hidden;
         }
 
         private void ArticleStagedForRepairOrMaintChanged(object sender, SelectionChangedEventArgs e)
         {
             RemoveArticleFromStageButton.IsEnabled = true;
             DataGridForReturn.SelectedItem = null;
+            NotificationLabel.Visibility = Visibility.Hidden;
         }
 
-        private void ReturnItemsToInventory(object sender, RoutedEventArgs e)
+        private void ReturnItemsToInventory(int status_id)
         {
             if (AreAnyArticlesStagedForReturn)
+                // problem (multiple staged areas)
             {
                 bool rentals_returned = new SQLController().
-                    ReturnArticlesToInventory(ListOfArticlesStagedForReturn);
+                    ReturnArticlesToInventory(ListOfArticlesStagedForReturn, status_id);
 
                 if (rentals_returned)
                 {
                     Rental.RefreshListOfRentals();
                     ListOfArticlesStagedForReturn.Clear();
-                    UpdateCustomersDisplayedArticles();
-
-                    // update list of customers, too
 
                     NotificationLabel.Content =
                         "Item(s) successfully returned by " +
@@ -203,7 +205,22 @@ namespace Rent_A_Ski.Pages
 
         private void SendItemsForRepairOrMaintenance(object sender, RoutedEventArgs e)
         {
+            ReturnItemsToInventory(Status.ListOfStatuses.
+                First(status => status.Description == "Maintenance required").id);
 
+            ReturnItemsToInventory(Status.ListOfStatuses.
+                First(status => status.Description == "Repair required").id);
+        }
+
+        private void ReturnItemsAsAvailable(object sender, RoutedEventArgs e)
+        {
+            ReturnItemsToInventory(Status.ListOfStatuses.
+                First(status => status.Description == "Available").id);
+        }
+
+        private void MarkArticleForMaintenance(object sender, RoutedEventArgs e)
+        {
+            ;
         }
     }
 }
