@@ -25,7 +25,7 @@ namespace Rent_A_Ski.Models
 
         public string AddedToInventoryOn
         {
-            get { return dateadded.ToString("yyyy-MM-dd"); }
+            get { return dateadded.ToString("yyyy-MM-dd HH:mm"); }
         }
 
         public decimal PricePerDay { get; set; }

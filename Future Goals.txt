@@ -1,0 +1,2 @@
+Invoice merging: 
+Mark older invoice(s) as paid and consolidate all billing under the most recent invoice number

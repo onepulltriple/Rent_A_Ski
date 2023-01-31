@@ -43,6 +43,8 @@ namespace Rent_A_Ski.Models
 
         public int? Employee_id_incoming { get; set; }
 
+        public int? Invoice_id { get; set; }
+
         public Article Article { get; set; }
 
         public Customer Customer { get; set; }
@@ -51,6 +53,8 @@ namespace Rent_A_Ski.Models
 
         public Employee? Employee_Incoming { get; set; }
 
+        public Invoice? Invoice { get; set; }
+
         public static ObservableCollection<Rental> ListOfRentals { get; set; }
 
         public static void RefreshListOfRentals()
@@ -58,6 +62,7 @@ namespace Rent_A_Ski.Models
             Article.RefreshListOfArticles();
             Customer.RefreshListOfCustomers();
             Employee.RefreshListOfEmployees();
+            Invoice.RefreshListOfInvoices();
             ListOfRentals = new SQLController().GetRentals();
         }
 
