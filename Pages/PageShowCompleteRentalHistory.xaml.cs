@@ -22,7 +22,7 @@ namespace Rent_A_Ski.Pages
     /// </summary>
     public partial class PageShowCompleteRentalHistory : Page
     {
-        public ObservableCollection<Rental> CompleteListOfRentals { get; set; }
+        public ObservableCollection<Rental> CompleteListOfRentals { get; set; } = new();
 
         public Rental SelectedRental { get; set; }
 
@@ -36,7 +36,11 @@ namespace Rent_A_Ski.Pages
         public void InitializeData()
         {
             Rental.RefreshListOfRentals();
-            CompleteListOfRentals = Rental.ListOfRentals;
+            var tempList = Rental.ListOfRentals.
+                OrderByDescending(rental => rental.DateOfRental);
+
+            foreach (var item in tempList)
+                CompleteListOfRentals.Add(item);
         }
     }
 }

@@ -59,7 +59,6 @@
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding FirstName}" Header="First Name" />
                         <DataGridTextColumn Binding="{Binding LastName}" Header="Last Name" />
-                        <DataGridTextColumn Binding="{Binding Email}" Header="Email" />
                         <DataGridTextColumn Binding="{Binding DateOfBirth}" Header="Birthday" />
                     </DataGrid.Columns>
                 </DataGrid>
@@ -97,7 +96,7 @@
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding Category.Name}" Header="Category" />
                         <DataGridTextColumn Binding="{Binding Name}" Header="Item Description" />
-                        <DataGridTextColumn Binding="{Binding Counter}" Header="Counter" />
+                        <DataGridTextColumn Binding="{Binding Counter}" Header="Rented Count" />
                     </DataGrid.Columns>
                 </DataGrid>
 
@@ -197,7 +196,7 @@
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding Category.Name}" Header="Category" />
                         <DataGridTextColumn Binding="{Binding Name}" Header="Item Description" />
-                        <DataGridTextColumn Binding="{Binding PricePerDay}" Header="Price Per Day" />
+                        <DataGridTextColumn Binding="{Binding SerialNumber}" Header="Serial Number" />
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>
@@ -232,7 +231,7 @@
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding Category.Name}" Header="Category" />
                         <DataGridTextColumn Binding="{Binding Name}" Header="Item Description" />
-                        <DataGridTextColumn Binding="{Binding PricePerDay}" Header="Price Per Day" />
+                        <DataGridTextColumn Binding="{Binding SerialNumber}" Header="Serial Number" />
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>
@@ -271,7 +270,7 @@
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding Category.Name}" Header="Category" />
                         <DataGridTextColumn Binding="{Binding Name}" Header="Item Description" />
-                        <DataGridTextColumn Binding="{Binding PricePerDay}" Header="Price Per Day" />
+                        <DataGridTextColumn Binding="{Binding SerialNumber}" Header="Serial Number" />
                     </DataGrid.Columns>
                 </DataGrid>
 

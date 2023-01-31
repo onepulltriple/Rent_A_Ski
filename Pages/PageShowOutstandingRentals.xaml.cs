@@ -38,12 +38,11 @@ namespace Rent_A_Ski.Pages
             Rental.RefreshListOfRentals();
 
             var tempList = Rental.ListOfRentals.
-                Where(rental => rental.Article.Status.Description == "Rented");
+                Where(rental => rental.DateOfReturn == null).
+                OrderByDescending(rental => rental.DateOfRental);
 
             foreach (var item in tempList)
-            {
                 ListOfOutstandingRentals.Add(item);
-            }
         }
     }
 }

@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Shell;
 
 namespace Rent_A_Ski.Pages
 {
@@ -86,23 +87,26 @@ namespace Rent_A_Ski.Pages
         {
             Rental.RefreshListOfRentals();
 
-            ListOfCustomersWithRentals = new ObservableCollection<Customer>
-                (
-                    Rental.ListOfRentals.
-                    Where(rental => rental.DateOfReturn == null).
-                    Select(rental => rental.Customer).
-                    Distinct()
-                );
+            var tempList = Rental.ListOfRentals.
+                Where(rental => rental.DateOfReturn == null).
+                Select(rental => rental.Customer).
+                Distinct();
+
+            foreach (var item in tempList)
+                ListOfCustomersWithRentals.Add(item);
         }
 
         private void CustomerChanged(object sender, SelectionChangedEventArgs e)
         {
-            UpdateCustomersDisplayedArticles();
-            StageArticleForReturnButton.IsEnabled = false;
-            MarkArticleForMaintenanceButton.IsEnabled = false;
-            MarkArticleForRepairButton.IsEnabled = false;
-            RemoveArticleFromStageButton.IsEnabled = false;
-            NotificationLabel.Visibility = Visibility.Hidden;
+            if (SelectedCustomer != null)
+            {
+                UpdateCustomersDisplayedArticles();
+                StageArticleForReturnButton.IsEnabled = false;
+                MarkArticleForMaintenanceButton.IsEnabled = false;
+                MarkArticleForRepairButton.IsEnabled = false;
+                RemoveArticleFromStageButton.IsEnabled = false;
+                NotificationLabel.Visibility = Visibility.Hidden;
+            }
         }
 
         private void UpdateCustomersDisplayedArticles()
@@ -252,7 +256,7 @@ namespace Rent_A_Ski.Pages
                     First(status => status.Description == "Available").id;
 
                 rentals_returned = new SQLController().
-                  ReturnArticlesToInventory(ListOfArticlesStagedForReturn, status_id);
+                    ReturnArticlesToInventory(ListOfArticlesStagedForReturn, status_id);
             }
 
             if (AreAnyArticlesStagedForMaintenance)
@@ -285,6 +289,9 @@ namespace Rent_A_Ski.Pages
                 NotificationLabel.Visibility = Visibility.Visible;
 
                 ReturnItemsToInventoryButton.IsEnabled = false;
+
+                ListOfCustomersWithRentals.Clear();
+                InitializeData();
             }
         }
     }
