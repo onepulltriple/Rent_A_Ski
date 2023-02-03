@@ -322,7 +322,10 @@ namespace Rent_A_Ski.Models
                             tempRental.Employee_id_incoming = (int)reader["TABLE_EMPLOYEES_ID_INC"];
                         else
                             tempRental.Employee_id_incoming = null;
-                        tempRental.Invoice_id = (int)reader["TABLE_INVOICES_ID"];
+                        if (reader["TABLE_INVOICES_ID"] != DBNull.Value)
+                            tempRental.Invoice_id = (int)reader["TABLE_INVOICES_ID"];
+                        else
+                            tempRental.Invoice_id = null;
 
                         tempRental.Article =
                             Article.ListOfArticles.First(article => article.id == tempRental.Article_id);
